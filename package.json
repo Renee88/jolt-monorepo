@@ -1,0 +1,14 @@
+{
+  "name": "monorepo",
+  "private": true,
+  "version": "0.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/jolt-us/Monorepo-practice.git",
+  "license": "MIT",
+  "devDependencies": {
+    "lerna": "^3.20.2"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
