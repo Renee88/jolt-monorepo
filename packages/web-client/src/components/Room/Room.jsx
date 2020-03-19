@@ -1,11 +1,11 @@
 import React from 'react'
 
-const App = () => {
+const Room = () =>{
   return (
     <div>
-<h1>My Monorepo</h1>
+    
     </div>
   )
 }
 
-export default App
+export default Room

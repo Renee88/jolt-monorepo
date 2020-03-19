@@ -14,12 +14,29 @@ module.exports = {
         use: {
           loader: "babel-loader"
         }
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "html-loader"
+          }
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
       }
     ]
   },
+  devServer: {
+    contentBase: path.join(__dirname, 'public'),
+    historyApiFallback: true // this prevents the default browser full page refresh on form submission and link change
+  },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html'
+      template: './src/index.html',
+      filename: 'index.html'
     })
   ]
 }
