@@ -14,18 +14,18 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Page = ({route, match}) => {
+const Page = ({match}) => {
   const classes = useStyles()
-  
   const [page, setPage] = useState('')
   const [user, setUser] = useState(null)
   const [talk, setTalk] = useState(null)
   const [room, setRoom] = useState(null)
   
   useEffect(() => {
-    console.log(route, match)
-    setPage(route)
-  })
+    const path = match.url.split('/')[1]
+    console.log(path)
+    setPage(path)
+  }, [page])
   
   console.log(match)
   
@@ -33,12 +33,12 @@ const Page = ({route, match}) => {
     page === 'users' ?
       <div className={classes.page}>
         <Users setUser={setUser}/>
-        {match ? <UserDetails id={match.params.id}/> : null}
+        <UserDetails id={match.params.id}/>
       </div> :
       page === 'talks' ?
         <div className={classes.page}>
           <Talks setTalk={setTalk}/>
-          {match ? <TalkDetails talk={talk}/> : null}
+          <TalkDetails talk={talk}/>
         </div> :
         page === 'rooms' ?
           <div className={classes.page}>

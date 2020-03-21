@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const User = ({user, showUserPage}) => {
+const User = ({user}) => {
   const classes = useStyles()
   
   return (

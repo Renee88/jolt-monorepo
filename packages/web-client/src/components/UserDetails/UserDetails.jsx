@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 
 const users = require('@monorepo/backend/Users.json')
@@ -24,19 +24,21 @@ const useStyles = makeStyles(theme => ({
 const UserDetails = ({id}) => {
   const classes = useStyles()
   
-  const getUser = (id) => {
-    return users.find(user => user.id == id)
-  }
+  const [user, setUser] = useState({})
   
-  const user = getUser(id)
+  useEffect(() =>{
+    setUser(users.find(user => user.id == id))
+  })
+  
   
   return (
+    user ?
     <div className={classes.userFrame}>
       <div className={classes.userContent}>
-        {user.name}
+        {id ? user.name : null}
       </div>
     </div>
-  
+  : null
   )
 }
 

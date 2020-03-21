@@ -31,7 +31,8 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, 'public'),
-    historyApiFallback: true // this prevents the default browser full page refresh on form submission and link change
+    historyApiFallback: true, // this prevents the default browser full page refresh on form submission and link change
+    port: 3000
   },
   plugins: [
     new HtmlWebpackPlugin({
