@@ -1,18 +1,19 @@
 import React from 'react'
-import { Button, Card, CardActions, CardContent, CardMedia, Typography, CardActionArea } from '@material-ui/core'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { Card, CardContent, CardMedia, Typography, CardActionArea } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
+import type { UserProps } from '../types'
 
 const useStyles = makeStyles(theme => ({
   userCard: {
-    width: '25vw',
+    width: '15vw',
     margin: 10,
     backgroundColor: '#F4F4F8'
   },
   user: {
     display: 'flex',
     flexDirection: 'row',
-    width: '20vw'
+    width: '12vw'
   },
   userPic: {
     display: 'flex',
@@ -27,20 +28,19 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const User = ({user}) => {
+const User = ({user}: UserProps) => {
   const classes = useStyles()
   
   return (
     <Link to={`/users/${user.id}`}>
       <Card className={classes.userCard}>
-        <CardActionArea >
+        <CardActionArea>
           <CardContent className={classes.user}>
             <CardMedia
               className={classes.userPic}
               image={user.picture}
               title={user.name}
             />
-            
             
             <Typography className={classes.userName}>
               {user.name}

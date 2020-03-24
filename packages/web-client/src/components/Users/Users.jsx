@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ScrollToBottom from 'react-scroll-to-bottom'
 import User from '../User/User.jsx'
 import { makeStyles } from '@material-ui/core/styles'
-
-const usersData = require('@monorepo/backend/Users.json')
+import type { UsersType } from '../types'
 
 const useStyles = makeStyles(theme =>({
   scrollList: {
@@ -11,20 +10,13 @@ const useStyles = makeStyles(theme =>({
   }
 }))
 
-const Users = ({match}) => {
+const Users = ({users}: {users: UsersType}) => {
   
   const classes = useStyles()
   
-  const [users, setUsers] = useState([])
-  
-  useEffect(() => {
-    setUsers(usersData)
-  })
-  
-  
   return (
     <ScrollToBottom className={classes.scrollList}>
-      {users.map((user,i) => <User key ={i} user={user} />)}
+      {users.map((user, i) => <User key={i} user={user} />)}
     </ScrollToBottom>
   )
 }

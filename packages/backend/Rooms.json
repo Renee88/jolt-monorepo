@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "name": "purple",
+    "participants": [],
+    "talk": ""
+  },
+  {
+    "id": "2",
+    "name": "pink",
+    "participants": [],
+    "talk": ""
+  },
+  {
+    "id": "3",
+    "name": "yellow",
+    "participants": [],
+    "talk": ""
+  },
+  {
+    "id": "4",
+    "name": "blue",
+    "participants": [],
+    "talk": ""
+  },
+  {
+    "id": "5",
+    "name": "orange",
+    "participants": [],
+    "talk": ""
+  },
+  {
+    "id": "6",
+    "name": "red",
+    "participants": [],
+    "talk": ""
+  }
+]

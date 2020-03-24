@@ -5,8 +5,9 @@ import Rooms from '../Rooms/Rooms.jsx'
 import UserDetails from '../UserDetails/UserDetails.jsx'
 import TalkDetails from '../TalkDetails/TalkDetails.jsx'
 import RoomDetails from '../RoomDetails/RoomDetails.jsx'
+import {useSelector} from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
-import { UserStory } from '../User/User.stories'
+
 
 const useStyles = makeStyles(theme => ({
   page: {
@@ -14,36 +15,33 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Page = ({match}) => {
+const Page = ({match, data}: {match: Object, data: Object[]}) => {
   const classes = useStyles()
-  const [page, setPage] = useState('')
-  const [user, setUser] = useState(null)
-  const [talk, setTalk] = useState(null)
-  const [room, setRoom] = useState(null)
+
+const userId = useSelector(state=> state.userId)
+  
+  const [page: string, setPage] = useState('')
   
   useEffect(() => {
-    const path = match.url.split('/')[1]
-    console.log(path)
+    const path: string = match.url.split('/')[1]
     setPage(path)
   }, [page])
-  
-  console.log(match)
   
   return (
     page === 'users' ?
       <div className={classes.page}>
-        <Users setUser={setUser}/>
+        <Users users = {data}/>
         <UserDetails id={match.params.id}/>
       </div> :
       page === 'talks' ?
         <div className={classes.page}>
-          <Talks setTalk={setTalk}/>
-          <TalkDetails talk={talk}/>
+          <Talks talks={data}/>
+          <TalkDetails id={match.params.id}/>
         </div> :
         page === 'rooms' ?
           <div className={classes.page}>
-            <Rooms setRoom={setRoom}/>
-            {match ? <RoomDetails room={room}/> : null}
+            <Rooms rooms={data} userId={userId}/>
+            <RoomDetails id={match.params.id}/>
           </div>
           : null
   
