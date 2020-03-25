@@ -1,5 +1,5 @@
-export const RemoveUser = (users: Object[],userID: string) => ({
+export const RemoveUser = (users: Object[],userId: string) => ({
   type: 'REMOVE_USER',
   users,
-  userID
+  userId
 })

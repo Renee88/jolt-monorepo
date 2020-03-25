@@ -3,11 +3,10 @@ import { makeStyles } from '@material-ui/core/styles'
 import type { DetailsProps, UserType } from '../types'
 import { Button } from '@material-ui/core'
 import { GetUserId as getUserId } from '../../actions/GetUserId'
+import { RemoveUser as removeUser } from '../../actions/RemoveUser'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-
-const users = require('@monorepo/backend/Users.json')
 
 const useStyles = makeStyles(theme => ({
     userFrame: {
@@ -19,18 +18,34 @@ const useStyles = makeStyles(theme => ({
     userContent: {
       display: 'flex',
       flexDirection: 'column',
+      justifyContent: 'space-between',
       backgroundColor: 'white',
       fontFamily: 'poppins',
       margin: 20,
       borderRadius: 10,
       width: '75vw',
       padding: 10
+    },
+    userActions: {
+      display: 'flex',
+      justifyContent: 'space-between'
+    },
+    selectRoom: {
+      display: 'flex',
+      alignSelf: 'center'
     }
   })
 )
 
+const buttonStyle = {
+  fontFamily: 'poppins',
+  width: 'fit-content',
+  backgroundColor: '#4B3FC9'
+}
+
 const UserDetails = ({id}: DetailsProps) => {
   const classes = useStyles()
+  const users = useSelector(state => state.users)
   
   const dispatch = useDispatch()
   
@@ -41,15 +56,27 @@ const UserDetails = ({id}: DetailsProps) => {
   })
   
   return (
-    user ?
+    user && id ?
       <div className={classes.userFrame}>
         <div className={classes.userContent}>
-          {id ? user.name : null}
-          <Link to={`/rooms`}>
-            <Button style={{fontFamily: 'poppins', width: 'fit-content'}} onClick={() => {
-              dispatch(getUserId(id))
-            }}>Select Room</Button>
+          
+          <div className={classes.userActions}>
+            <span>{id ? user.name : null}</span>
+            <Button
+              color="secondary"
+              onClick={() => dispatch(removeUser(users, id))
+              }>Delete user</Button>
+          </div>
+          
+          <Link to={`/rooms`} className={classes.selectRoom}>
+            <Button style={buttonStyle}
+                    color='primary'
+                    variant="contained"
+                    onClick={() => {
+                      dispatch(getUserId(id))
+                    }}>Select Room</Button>
           </Link>
+          
         </div>
       </div>
       : null

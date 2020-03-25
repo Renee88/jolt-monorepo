@@ -31,6 +31,6 @@ export type TalkProps = {
 export type RoomType = {
   id: string,
   name: string,
-  participants: Object[],
+  participants: UserType[],
   talk: string
 }

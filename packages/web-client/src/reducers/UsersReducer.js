@@ -1,6 +1,8 @@
+import type { UsersType } from '../components/types'
+
 const users = require('@monorepo/backend/Users.json')
 
-const UsersReducer = (state: any[] = users, action: any) => {
+const UsersReducer = (state: ?UsersType = users, action: any) => {
   
   const users = [...state]
   
