@@ -7,7 +7,7 @@
   "scripts": {
     "tsc": "tsc",
     "start": "nodemon server.ts",
-    "dev": "ts-node-dev --respawn --transpileOnly ./app/app.ts",
+    "dev": "ts-node ./server.ts --transpile-only",
     "prod": "tsc && node ./build/server.js"
   },
   "dependencies": {

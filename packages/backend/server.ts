@@ -2,7 +2,8 @@ import express, {Application, Request, Response, NextFunction} from 'express'
 // const express = require('express')
 const app: Application = express()
 const bodyParser = require('body-parser')
-const api = require('./server/routes/api')
+const users = require('./server/routes/users')
+const talks = require('./server/routes/talks')
 const port = process.env.PORT || 4000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -15,7 +16,8 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
   next();
 });
 
-app.use('/', api)
+app.use('/', users)
+app.use('/', talks)
 
 
 app.listen(port, () => {

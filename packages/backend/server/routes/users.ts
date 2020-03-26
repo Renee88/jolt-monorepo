@@ -8,9 +8,8 @@ const users: Users = require('../../Users.json')
 
 router.get('/users', function (req: Request, res: Response) {
     const usersData: Data[] = users.slice(0, 99)
-    const response = getResponse(usersData)
-    res.send(response)
-
+    const firstHundredUsers = getResponse(usersData)
+    res.send(firstHundredUsers)
 })
 
 
@@ -18,8 +17,8 @@ router.get('/user/:id', function (req: Request, res: Response) {
     const userId: string = req.params.id
     const user: Data = users.find(user => user.id === userId)
 
-    const response = getResponse(user)
-    res.send(response)
+    const requestedUser = getResponse(user)
+    res.send(requestedUser)
 })
 
 
@@ -30,9 +29,18 @@ router.post('/user', function (req: Request, res: Response) {
         users.push(newUser)
     }
 
-    const response = getResponse(newUser)
-    res.send(response)
+    const user = getResponse(newUser)
+    res.send(user)
 
+})
+
+router.delete('/user/:id', function (req: Request, res: Response) {
+    const userForRemovalId: string = req.params.id
+    const userForRemovalIndex: number = users.findIndex(user => user.id === userForRemovalId)
+    const userForRemoval = users[userForRemovalIndex]
+    users.splice(userForRemovalIndex, 1)
+    const removedUser  = getResponse(userForRemoval)
+    res.send(removedUser)
 })
 
 module.exports = router
