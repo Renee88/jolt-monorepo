@@ -3,36 +3,42 @@
     "id": "1",
     "name": "purple",
     "participants": [],
-    "talk": ""
+    "talk": "",
+    "jolter":""
   },
   {
     "id": "2",
     "name": "pink",
     "participants": [],
-    "talk": ""
+    "talk": "",
+    "jolter": ""
   },
   {
     "id": "3",
     "name": "yellow",
-    "participants": [],
-    "talk": ""
+    "talk": "",
+    "jolter": "",
+    "participants": []
   },
   {
     "id": "4",
     "name": "blue",
-    "participants": [],
-    "talk": ""
+    "talk": "",
+    "jolter": "",
+    "participants": []
   },
   {
     "id": "5",
     "name": "orange",
-    "participants": [],
-    "talk": ""
+    "talk": "",
+    "jolter": "",
+    "participants": []
   },
   {
     "id": "6",
     "name": "red",
-    "participants": [],
-    "talk": ""
+    "talk": "",
+    "jolter": "",
+    "participants": []
   }
 ]
