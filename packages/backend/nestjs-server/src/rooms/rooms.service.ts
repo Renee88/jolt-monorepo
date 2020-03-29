@@ -20,7 +20,7 @@ export class RoomsService {
         const roomId = uuidv4();
         const newRoom = new Room(roomId, name, talk, jolter);
 
-        if(!newRoom.name || !newRoom.jolter){
+        if(!name || !jolter){
             throw new HttpException({
                 data: newRoom,
                 success: false,

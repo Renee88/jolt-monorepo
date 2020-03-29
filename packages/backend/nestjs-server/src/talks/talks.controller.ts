@@ -1,6 +1,7 @@
 import {Body, Controller, Delete, Get, Param, Post} from "@nestjs/common";
 import {TalksService} from "./talks.service";
 import {Talk} from "./talk.model";
+import {APIResponse, Data} from "../responsesTypes";
 
 @Controller('talks')
 export class TalksController {
@@ -8,32 +9,47 @@ export class TalksController {
     }
 
     @Get()
-    getTalks(): Talk[]{
-        return this.TalksService.getTalks()
+    getTalks(): APIResponse<Data[]> {
+        return {
+            data: this.TalksService.getTalks(),
+            success: true
+        }
     }
 
     @Get(':id')
     getTalk(
         @Param('id') talkId: string
-    ): Talk {
-        return this.TalksService.getTalk(talkId)
+    ): APIResponse<Data> {
+        return {
+            data: this.TalksService.getTalk(talkId),
+            success: true
+        }
     }
 
     @Post()
     addTalk(
         @Body('name') talkName: string,
         @Body('transcript') transcript: string
-    ): {id: string} {
+    ): APIResponse<Data> {
         const talkId = this.TalksService.addTalk(talkName, transcript);
-        return {id: talkId}
+        return {
+            data: {id: talkId},
+            success: true
+        }
     }
 
     @Delete(':id')
     deleteTalk(
-        @Param('id') talkId: string
-    ){
+        @Param('id')
+            talkId: string
+    ):
+        APIResponse < Data > {
         this.TalksService.deleteTalk(talkId);
-        return null
+        return {
+            data: {id: talkId},
+            success: true
+        }
     }
 
 }
+

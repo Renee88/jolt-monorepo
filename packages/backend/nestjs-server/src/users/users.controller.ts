@@ -1,6 +1,7 @@
 import {Body, Controller, Delete, Get, Param, Post} from "@nestjs/common";
 import {UsersService} from "./users.service";
 import {User} from "./user.model";
+import {APIResponse, Data} from "../responsesTypes";
 
 
 @Controller('users')
@@ -9,15 +10,22 @@ export class UsersController {
     }
 
     @Get()
-    getUsers(): User[] {
-        return this.UsersService.getUsers()
+    getUsers(): APIResponse<Data[]> {
+        return {
+            data: this.UsersService.getUsers(),
+            success: true
+        }
     }
 
     @Get(':id')
     getUser(
         @Param('id') id: string
-    ) : User {
-        return this.UsersService.getUser(id)
+    ):
+        APIResponse<Data> {
+        return {
+            data: this.UsersService.getUser(id),
+            success: true
+        }
     }
 
     @Post()
@@ -27,16 +35,27 @@ export class UsersController {
         @Body('email') email: string,
         @Body('age') age: number,
         @Body('dogs') dogs?: any[]
-    ): any {
-        const {id} = this.UsersService.addUser(name, picture, email, age, dogs)
-        return {id}
+    ):
+        APIResponse<Data> {
+        const {id} = this.UsersService.addUser(name, picture, email, age, dogs);
+        return {
+            data: {id},
+            success: true
+        }
+
+
     }
 
     @Delete(':id')
     removeUser(
-        @Param('id') id: string
-    ) : any {
-        this.UsersService.removeUser(id)
-        return null
+        @Param('id')
+            userId: string
+    ):
+        APIResponse<Data> {
+        this.UsersService.removeUser(userId);
+        return {
+            data: {id: userId},
+            success: true
+        }
     }
 }

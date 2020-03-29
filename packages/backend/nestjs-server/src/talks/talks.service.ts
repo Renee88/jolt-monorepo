@@ -1,4 +1,4 @@
-import {Injectable, NotFoundException} from "@nestjs/common";
+import {HttpException, HttpStatus, Injectable, NotFoundException} from "@nestjs/common";
 import {Talk} from "./talk.model";
 import {v4 as uuidv4} from 'uuid'
 
@@ -17,8 +17,18 @@ export class TalksService {
 
     addTalk(name: string, transcript: string) {
         const talkId = uuidv4();
-        const talk = new Talk(name, transcript, talkId);
-        this.talks.push(talk);
+        const newTalk = new Talk(name, transcript, talkId);
+
+        if(!name || !transcript){
+            throw new HttpException({
+                data: newTalk,
+                success: false,
+                errorCode: HttpStatus.BAD_REQUEST,
+                error: 'Make sure you fill in all the details: talk name, content'
+            }, HttpStatus.BAD_REQUEST)
+        }
+
+        this.talks.push(newTalk);
         return talkId
     }
 
@@ -29,12 +39,18 @@ export class TalksService {
 
     findTalk(id: string): [Talk, number] {
         const talkIndex = this.talks.findIndex(talk => talk.id === id);
+        const talk = this.talks[talkIndex];
 
         if(talkIndex === -1){
-            throw new NotFoundException()
+            throw new HttpException({
+                data: talk,
+                success: false,
+                errorCode: HttpStatus.NOT_FOUND,
+                error: 'Room not found'
+            }, HttpStatus.NOT_FOUND)
+
         }
 
-        const talk = this.talks[talkIndex];
         return [talk, talkIndex]
 
     }
