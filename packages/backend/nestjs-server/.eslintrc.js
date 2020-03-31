@@ -4,12 +4,13 @@ module.exports = {
     project: 'tsconfig.json',
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint/eslint-plugin'],
+  plugins: ['@typescript-eslint/eslint-plugin', 'security'],
   extends: [
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier',
     'prettier/@typescript-eslint',
+    'plugin:security/recommended'
   ],
   root: true,
   env: {
@@ -20,5 +21,7 @@ module.exports = {
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    'detect-unsafe-regex': 'warn',
+    'detect-non-literal-regexp': 'warn'
   },
 };
