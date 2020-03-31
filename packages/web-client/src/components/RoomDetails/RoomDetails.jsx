@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import type { DetailsProps, RoomType } from '../types'
+import type { RoomsType, RoomType } from '../types'
 
-const rooms = require('@monorepo/backend/Rooms.json')
-
-const RoomDetails = ({id}: DetailsProps) => {
+const RoomDetails = ({id, rooms}: {id: string, rooms: RoomsType}) => {
   
   const [room: RoomType, setRoom] = useState({})
   
   useEffect(() => {
-    const chosenRoom: RoomType = rooms.find((room: RoomType) => room.id === id)
+    const chosenRoom: ?RoomType = rooms.find((room: RoomType) => room.id === id)
     setRoom(chosenRoom)
   })
   

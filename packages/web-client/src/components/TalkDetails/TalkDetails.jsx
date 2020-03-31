@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import type { DetailsProps, TalkType } from '../types'
+import type { TalksType, TalkType } from '../types'
 
-const talks = require('@monorepo/backend/Talks.json')
-
-const TalkDetails = ({id}: DetailsProps) => {
+const TalkDetails = ({id, talks}: {id: string, talks: TalksType}) => {
   
   const [talk: ?TalkType, setUser] = useState({})
   
   useEffect(() => {
-    setUser(talks.find((talk: TalkType) => talk.youTubeID === id))
+    setUser(talks.find((talk: TalkType) => talk.id === id))
   })
   
   return (

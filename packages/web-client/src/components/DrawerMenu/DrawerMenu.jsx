@@ -26,7 +26,7 @@ const DrawerMenu = ({isDrawerOpen, setOpen}: {
   
   const classes = useStyles()
   const anchor = 'left'
-  const MenuTabs = ['Users', 'Talks', 'Rooms']
+  const MenuTabs = ['Users', 'Talks', 'Rooms', 'Session Requests']
   
   const toggleDrawer = () => {
     setOpen(false)
@@ -61,7 +61,14 @@ const DrawerMenu = ({isDrawerOpen, setOpen}: {
                     <ListItemIcon><GroupIcon/></ListItemIcon>
                     <ListItemText primary={tab}/>
                   </ListItem>
-                </Link> : null
+                </Link> :
+                tab==='Session Requests' ?
+                  <Link key={i} to={`/session-requests`} className={classes.drawerTab}>
+                    <ListItem button key={tab}>
+                      <ListItemIcon><GroupIcon/></ListItemIcon>
+                      <ListItemText primary={tab}/>
+                    </ListItem>
+                  </Link>: null
         ))}
       </List>
     </div>

@@ -1,10 +1,9 @@
 import React from 'react'
 import Room from '../Room/Room.jsx'
-import type { RoomType, UserType } from '../types'
+import type { RoomsType, RoomType, UserType } from '../types'
 import ScrollToBottom from 'react-scroll-to-bottom'
 import { makeStyles } from '@material-ui/core/styles'
 
-const rooms = require('@monorepo/backend/Rooms.json')
 
 const useStyles = makeStyles(theme => ({
   scrollList: {
@@ -12,7 +11,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Rooms = ({userId}: {userId: string}) => {
+const Rooms = ({userId, rooms}: {userId: string, rooms: RoomsType}) => {
   const classes = useStyles()
   
   return (

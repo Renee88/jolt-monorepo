@@ -16,7 +16,7 @@ const Talk = ({talk}: TalkProps) => {
   const classes = useStyles()
   
   return (
-    <Link to={`/talks/${talk.youTubeID}`}>
+    <Link to={`/talks/${talk.id}`}>
       <Card className={classes.talk}>
         <CardActionArea>
           <CardContent>

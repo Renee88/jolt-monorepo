@@ -36,12 +36,12 @@ const userId = useSelector(state=> state.userId)
       page === 'talks' ?
         <div className={classes.page}>
           <Talks talks={data}/>
-          <TalkDetails id={match.params.id}/>
+          <TalkDetails id={match.params.id} talks={data}/>
         </div> :
         page === 'rooms' ?
           <div className={classes.page}>
             <Rooms rooms={data} userId={userId}/>
-            <RoomDetails id={match.params.id}/>
+            <RoomDetails id={match.params.id} rooms={data}/>
           </div>
           : null
   

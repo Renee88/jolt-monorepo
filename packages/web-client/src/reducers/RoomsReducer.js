@@ -1,4 +1,4 @@
-const rooms = require('@monorepo/backend/Rooms.json')
+const rooms = require('@monorepo/backend/Data/Rooms.json')
 
 const RoomsReducer = (state: [] = rooms, action: any) => {
   

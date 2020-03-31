@@ -1,4 +1,4 @@
-// flow-typed signature: a22257517703263550cdb5919289035e
+// flow-typed signature: 1920a3111d53a7a671ce35978ff66ea0
 // flow-typed version: <<STUB>>/@monorepo_v1.0.0/flow_v0.121.0
 
 /**
@@ -17,35 +17,28 @@ declare module '@monorepo' {
   declare module.exports: any;
 }
 
+declare module '@monorepo/backend/Data/Users.json' {
+  declare module.exports: any;
+}
+
+declare module '@monorepo/backend/Data/Rooms.json'{
+  declare module.exports: any;
+}
+
+declare module '@monorepo/backend/Data/Talks.json'{
+  declare module.exports: any;
+}
+
 /**
  * We include stubs for each file inside this npm package in case you need to
  * require those files directly. Feel free to delete any files that aren't
  * needed.
  */
-declare module '@monorepo/backend/server' {
-  declare module.exports: any;
-}
-
-declare module '@monorepo/backend/Users.json' {
-  declare module.exports: any;
-}
-
-declare module '@monorepo/backend/Talks.json' {
-  declare module.exports: any;
-}
-
-declare module '@monorepo/backend/Rooms.json' {
-  declare module.exports: any;
-}
-
 declare module '@monorepo/web-client/webpack.config' {
   declare module.exports: any;
 }
 
 // Filename aliases
-declare module '@monorepo/backend/server.js' {
-  declare module.exports: $Exports<'@monorepo/backend/server'>;
-}
 declare module '@monorepo/web-client/webpack.config.js' {
   declare module.exports: $Exports<'@monorepo/web-client/webpack.config'>;
 }

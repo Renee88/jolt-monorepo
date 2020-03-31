@@ -1,8 +1,3 @@
-export type DetailsProps = {
-  id?: string,
-  youTubeID?: string
-}
-
 export type UserType = {
   id: string,
   name: string,
@@ -12,16 +7,14 @@ export type UserType = {
   dogs: any[]
 }
 
-export type UsersType = Array<UserType>
-
 export type UserProps = {
   user: UserType
 }
 
 export type TalkType = {
+  id: string,
   name: string,
-  transcript: string,
-  youTubeID: string
+  transcript: string
 }
 
 export type TalkProps = {
@@ -34,3 +27,7 @@ export type RoomType = {
   participants: UserType[],
   talk: string
 }
+
+export type UsersType = Array<UserType>
+export type RoomsType = Array<RoomType>
+export type TalksType = Array<TalkType>

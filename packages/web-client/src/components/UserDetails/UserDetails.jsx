@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import type { DetailsProps, UserType } from '../types'
+import type { UserType } from '../types'
 import { Button } from '@material-ui/core'
 import { GetUserId as getUserId } from '../../actions/GetUserId'
 import { RemoveUser as removeUser } from '../../actions/RemoveUser'
@@ -43,7 +43,7 @@ const buttonStyle = {
   backgroundColor: '#4B3FC9'
 }
 
-const UserDetails = ({id}: DetailsProps) => {
+const UserDetails = ({id}: {id: string}) => {
   const classes = useStyles()
   const users = useSelector(state => state.users)
   
