@@ -46,7 +46,6 @@ const Room = ({room}: { room: RoomType }) => {
           <FiberManualRecordIcon style={{color: room.name, marginRight: 10}}/>
           <div className={classes.roomCardText}>
             <p className={classes.row}>{room.name}</p>
-            <p className={classes.row}>Talk: {room.talk}</p>
             <p className={classes.row}>In the room: {room.participants.length}</p>
           </div>
         </CardContent>

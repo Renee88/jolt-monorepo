@@ -12,10 +12,13 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@date-io/date-fns": "1.x",
     "@material-ui/core": "^4.9.5",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/pickers": "^3.2.10",
     "@monorepo/backend": "^1.0.0",
     "babel-loader": "^8.0.6",
+    "date-fns": "^2.11.1",
     "html-webpack-plugin": "^3.2.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",

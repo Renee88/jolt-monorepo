@@ -1,4 +1,4 @@
-export const UserIdReducer = (state: string = '', action: Object) => {
+const UserIdReducer = (state: string = '', action: Object) => {
   switch (action.type) {
     case 'GET_USER_ID':
       return action.userId
@@ -8,3 +8,5 @@ export const UserIdReducer = (state: string = '', action: Object) => {
       return state
   }
 }
+
+export default UserIdReducer
