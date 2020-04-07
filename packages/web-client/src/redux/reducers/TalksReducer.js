@@ -1,4 +1,4 @@
-import type { TalksType } from '../components/types'
+import type { TalksType } from '../../types'
 
 const talks = require('@monorepo/backend/Data/Talks.json')
 

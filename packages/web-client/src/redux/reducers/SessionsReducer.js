@@ -1,4 +1,4 @@
-import type { SessionsType } from '../components/types'
+import type { SessionsType } from '../../types'
 
 const SessionsReducer = (state: SessionsType = [], action: any) => {
   

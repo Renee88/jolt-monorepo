@@ -1,117 +1,111 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Component } from 'react'
 import { Button, Modal } from '@material-ui/core'
 import SessionRequestInput from '../SessionRequestInput/SessionRequestInput.jsx'
 import SendIcon from '@material-ui/icons/Send'
-import { useDispatch, useSelector } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
-import { addSessionRequest } from '../../actions/AddSessionRequest'
-import { v4 as uuidv4 } from 'uuid'
+import { addSessionRequest } from '../../redux/actions/AddSessionRequest'
 import DatePicker from '../DatePicker/DatePicker.jsx'
-import type { UserType } from '../types'
+import type { UserType } from '../../types'
+import { connect } from '@jolt-us/jolt-mobx'
+import {connect as connectRedux} from 'react-redux'
+import './SessionRequestModal.css'
 
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  paper: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: '40vw',
-    height: '30vh',
-    backgroundColor: theme.palette.background.paper,
-    borderRadius: '5px',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-  requestInputs: {
-    display: 'flex'
-  },
-  successMessage: {
-    color: 'green',
-    textAlign: 'center',
-    fontFamily: 'poppins'
-  }
+
+
+@connect((store: any)=> ({
+  newSessionRequest: store.sessionsStore.session,
+  addSessionRequest: store.sessionsStore.addSessionRequest,
+  removeSessionRequest: store.sessionsStore.removeSessionRequest
 }))
+  class SessionRequestModal extends Component<*,*>{
 
-const SessionRequestModal = ({open, setOpen}: { open: boolean, setOpen: any }) => {
-  const classes = useStyles()
-  
-  const {users, rooms, talks} = useSelector(state => state)
-  const dispatch = useDispatch()
-  
-  const [added, setAdded] = useState(false)
-  
-  const [jolter, setJolter] = useState({
-    id: '',
-    name: '',
-    age: undefined,
-    email: '',
-    picture: '',
-    dogs: []
-  })
-  
-  const [talk, setTalk] = useState({
-    id: '',
-    name: '',
-    transcript: ''
-  })
-  
-  const [room, setRoom] = useState({
-    id: '',
-    name: '',
-    participants: []
-  })
-  
-  const [date, setDate] = useState('')
-  const [hour, setHour] = useState('')
-  
-  const [session, setSession] = useState({
-    id: '',
-    jolter: {},
-    talk: {},
-    room: {},
-    date: ''
-  })
-  
-  const handleClose = () => {
-    setOpen(false)
-  }
-  
-  const addSession = () => {
-    const newSession = {
-      id: uuidv4(),
-      jolter: jolter,
-      talk: talk,
-      room: room,
-      date: date + ' ' + hour
+
+    constructor(){
+      super()
+      this.state = {
+        added: false,
+        input: {
+          talk: {},
+          room: {},
+          jolter: {},
+          date: '',
+          hour: ''
+        }
+      }
     }
-    setSession(newSession)
-    setAdded(true)
-    dispatch(addSessionRequest(newSession))
+
+
+    setSessionAdded = (added) => {
+      this.setState({added})
+    }
+    
+    addSessionRequest = (talk, room,jolter, date, hour) => {
+      this.props.addSessionRequest(talk,room,jolter, date, hour)
+      this.setSessionAdded(true)
+    }
+
+    handleInput = (fieldName, data) => {
+      const input = {...this.state.input}
+      input[fieldName] = data
+      this.setState({input})
+
+    }
+
+    getHourInput = (hour) => {
+      const input = this.state.input
+      input.hour = hour
+      this.setState({input})
+    }
+    
+    getDateInput = (day) => {
+      const input = this.state.input
+      input.date = day
+      this.setState({input})
+    }
+
+
+    
+    handleClose = () => {
+      this.props.setOpen()
+      this.setSessionAdded(false)
+    }
+    
+    render(){
+      const {open} = this.props
+      const {talk, room, jolter, date, hour} = this.state.input
+
+      return (
+        <Modal
+          className= 'modal'
+          open={open}
+          onClose={this.handleClose}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <div className='paper'>
+            <div id='session-request-inputs' >
+              <SessionRequestInput inputType='jolter' data={this.props.users} setField={this.handleInput}/>
+              <SessionRequestInput inputType='talk' data={this.props.talks} setField={this.handleInput}/>
+              <SessionRequestInput inputType='room' data={this.props.rooms} setField={this.handleInput}/>
+            </div>
+            <DatePicker getDateInput={this.getDateInput} getHourInput={this.getHourInput} />
+            <Button onClick={() => this.addSessionRequest(talk, room, jolter, date, hour)}><SendIcon/>Submit</Button>
+            {this.state.added ? <p className='success-message'>Session request was added successfully</p> : null}
+          </div>
+        </Modal>
+      )
+    }
+    
   }
-  
-  return (
-    <Modal
-      className={classes.modal}
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="simple-modal-title"
-      aria-describedby="simple-modal-description"
-    >
-      <div className={classes.paper}>
-        <div id='session-request-inputs' className={classes.requestInputs}>
-          <SessionRequestInput inputType='jolter' data={users} setField={setJolter}/>
-          <SessionRequestInput inputType='talk' data={talks} setField={setTalk}/>
-          <SessionRequestInput inputType='room' data={rooms} setField={setRoom}/>
-        </div>
-        <DatePicker setSelectedDate={setDate} setSelectedHour={setHour}/>
-        <Button onClick={() => addSession()}><SendIcon/>Submit</Button>
-        {added ? <p className={classes.successMessage}>Session request was added successfully</p> : null}
-      </div>
-    </Modal>
-  )
+// }
+
+const mapStateToProps = (state) => {
+    return{
+      users: state.users,
+      rooms: state.rooms,
+      talks: state.talks
+    }
 }
 
-export default SessionRequestModal
+
+export default connectRedux(mapStateToProps)(SessionRequestModal)

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ScrollToBottom from 'react-scroll-to-bottom'
 import User from '../User/User.jsx'
 import { makeStyles } from '@material-ui/core/styles'
-import type { UsersType } from '../types'
+import type { UsersType } from '../../types'
 
 const useStyles = makeStyles(theme =>({
   scrollList: {

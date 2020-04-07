@@ -2,34 +2,41 @@ import React, { useState } from 'react'
 import 'date-fns'
 import Grid from '@material-ui/core/Grid'
 import DateFnsUtils from '@date-io/date-fns'
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from '@material-ui/pickers'
+import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers'
+import { useEffect } from 'react'
 
-const DatePicker = ({setSelectedDate, setSelectedHour}: { setSelectedDate: (string) => void, setSelectedHour: (string)=> void }) => {
-  
+const DatePicker = ({ getDateInput, getHourInput }: { getDateInput: (date: {}) => void, getHourInput: (hour: {}) => void }) => {
+
   const today = new Date()
   const [selectedDate, setDateInput] = useState(today)
   const [selectedHour, setHourInput] = useState(today)
-  
+
+  const getHour = (selectedHour) => {
+    const minutes = parseInt(selectedHour.getMinutes()) < 10 ? "0" + selectedHour.getMinutes() : selectedHour.getMinutes()
+    const hour = selectedHour.getHours() + ':' + minutes
+    return hour
+  }
+
+  const getDay = (selectedDate) => {
+    const month = selectedDate.getMonth() + 1
+    const day = selectedDate.getDate() + '/' + month + '/' + selectedDate.getFullYear()
+    return day
+  }
+
   const handleDateChange = (date) => {
     const fullDate = new Date(date)
-    const month = fullDate.getMonth() + 1
-    const day = fullDate.getDate() + '/' + month + '/' + fullDate.getFullYear()
-    setDateInput(day)
-    console.log(day)
-    setSelectedDate(day)
+    setDateInput(fullDate)
+    const day = getDay(fullDate)
+    getDateInput(day)
   }
-  
+
   const handleHourChange = (date) => {
     const fullDate = new Date(date)
-    const hour = fullDate.getHours() + ':' + fullDate.getMinutes()
     setHourInput(fullDate)
-    setSelectedHour(hour)
+    const hour = getHour(fullDate)
+    getHourInput(hour)
   }
-  
+
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Grid container justify="space-around">
@@ -39,7 +46,7 @@ const DatePicker = ({setSelectedDate, setSelectedHour}: { setSelectedDate: (stri
           format="MM/dd/yyyy"
           margin="normal"
           id="date-picker-inline"
-          label="Date picker inline"
+          label="Date"
           value={selectedDate}
           onChange={handleDateChange}
           KeyboardButtonProps={{
@@ -49,7 +56,7 @@ const DatePicker = ({setSelectedDate, setSelectedHour}: { setSelectedDate: (stri
         <KeyboardTimePicker
           margin="normal"
           id="time-picker"
-          label="Time picker"
+          label="Time"
           value={selectedHour}
           onChange={handleHourChange}
           KeyboardButtonProps={{

@@ -1,47 +1,74 @@
-import React, { useState } from 'react'
-import SessionRequest from '../SessionRequest/SessionRequest.jsx'
-import { v4 as uuidv4 } from 'uuid'
-import type { RoomType, SessionsType, TalkType, UserType } from '../types'
-import { Button, Table, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core'
-import AddIcon from '@material-ui/icons/Add';
-import { makeStyles } from '@material-ui/core/styles'
-import SessionRequestModal from '../SessionRequestModal/SessionRequestModal.jsx'
-import SessionRequestTable from '../SessionRequestsTable/SessionRequestTable.jsx'
+import React, { useState } from "react";
+import type { SessionsType } from "../../types";
+import { Button } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
+import { makeStyles } from "@material-ui/core/styles";
+import SessionRequestModal from "../SessionRequestModal/SessionRequestModal.jsx";
+import SessionRequestTable from "../SessionRequestsTable/SessionRequestsTable.jsx";
+import { Component } from "react";
+import './SessionRequests.css'
+import { connect } from "@jolt-us/jolt-mobx/lib/connect";
 
-const useStyles=makeStyles(theme=> ({
+const styles = {
   title: {
-    textAlign: 'center',
-    fontFamily: 'poppins',
+    textAlign: "center",
+    fontFamily: "poppins",
     fontSize: 20,
-    fontWeight: 'bold'
-  }
+    fontWeight: "bold",
+  },
+  buttonStyle: {
+    margin: 10,
+    backgroundColor: "#4b3fc9",
+    color: "white",
+  },
+};
+
+@connect((store: any) => ({
+    getSessionRequests: store.sessionsStore.getSessionRequests
 }))
+class SessionRequests extends Component<*, *> {
 
-const buttonStyle = {
-  margin: 10,
-  backgroundColor: '#4b3fc9',
-  color: 'white'
-}
 
-const SessionRequests = ({sessions}: {sessions: SessionsType}) => {
-  const classes = useStyles()
-  
-  const [open, setOpen] = useState(false)
-  
-  const setModalOpen = () => {
-    setOpen(true)
-    console.log(open)
+  constructor() {
+    super();
+    this.state = {
+      open: false,
+      sessionRequests: []
+    };
   }
-  
-  return (
-    <div>
-      <Button style={buttonStyle} variant='contained' onClick={setModalOpen}><AddIcon style={{marginRight: 10}}/>New Session Request</Button>
-      <p className={classes.title}>Session requests</p>
-      <SessionRequestTable sessions={sessions}/>
-      <SessionRequestModal open={open} setOpen={setOpen}/>
-    </div>
-    
-  )
+
+  toggleModalOpen = () => {
+    const state = {...this.state};
+    this.setState({ open: !this.state.open });
+  };
+
+
+  getSessionRequests = () => {
+    const sessionRequests = this.props.getSessionRequests()
+    this.setState({sessionRequests})
+  }
+
+
+  render() {
+    const sessionRequests = this.props.getSessionRequests()
+
+    return (
+      <div>
+        <Button
+          style={styles.buttonStyle}
+          variant="contained"
+          onClick={this.toggleModalOpen}
+        >
+          <AddIcon style={{ marginRight: 10 }} /> New Session Request
+        </Button>
+        <p id="session-requests-title">Session requests</p>
+        <SessionRequestTable sessions={sessionRequests} getSessionRequests={this.getSessionRequests}/>
+        <SessionRequestModal open={this.state.open} setOpen={this.toggleModalOpen} />
+      </div>
+    );
+  }
 }
 
-export default SessionRequests
+export default SessionRequests;
+
+

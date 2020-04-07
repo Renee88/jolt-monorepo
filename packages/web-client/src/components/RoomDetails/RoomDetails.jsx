@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import type { RoomsType, RoomType } from '../types'
+import type { RoomsType, RoomType } from '../../types'
 
 const RoomDetails = ({id, rooms}: {id: string, rooms: RoomsType}) => {
   

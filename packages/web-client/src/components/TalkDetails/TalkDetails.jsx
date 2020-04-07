@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import type { TalksType, TalkType } from '../types'
+import type { TalksType, TalkType } from '../../types'
 
 const TalkDetails = ({id, talks}: {id: string, talks: TalksType}) => {
   

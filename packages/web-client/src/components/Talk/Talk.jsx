@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Card, CardContent, CardActionArea , Typography} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
-import type { TalkProps } from '../types'
+import type { TalkProps } from '../../types'
 
 const useStyles = makeStyles(theme => ({
   talk: {

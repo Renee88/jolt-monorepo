@@ -1,10 +1,10 @@
 import React from 'react'
 import { Button, Card, CardContent, Typography, CardActions } from '@material-ui/core'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
-import type { RoomType, UserType } from '../types'
+import type { RoomType, UserType } from '../../types'
 import { Link } from 'react-router-dom'
-import { AddUserToRoom as addUserToRoom } from '../../actions/AddUserToRoom'
-import { ResetUserId as resetUserId } from '../../actions/ResetUserId'
+import { AddUserToRoom as addUserToRoom } from '../../redux/actions/AddUserToRoom'
+import { ResetUserId as resetUserId } from '../../redux/actions/ResetUserId'
 import { makeStyles } from '@material-ui/core/styles'
 import { useDispatch, useSelector } from 'react-redux'
 

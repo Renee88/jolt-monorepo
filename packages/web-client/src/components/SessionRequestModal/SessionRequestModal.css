@@ -1,0 +1,26 @@
+.modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .paper {
+    display: flex;
+    flex-direction: column;
+    width: 40vw;
+    height: 30vh;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px ;
+    padding: 7px;
+  }
+
+  #session-request-inputs{
+    display: flex
+  }
+
+  .success-message {
+    color: green;
+    text-align: center;
+    font-family: poppins;
+  }

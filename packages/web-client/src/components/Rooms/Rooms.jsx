@@ -1,6 +1,6 @@
 import React from 'react'
 import Room from '../Room/Room.jsx'
-import type { RoomsType, RoomType, UserType } from '../types'
+import type { RoomsType, RoomType, UserType } from '../../types'
 import ScrollToBottom from 'react-scroll-to-bottom'
 import { makeStyles } from '@material-ui/core/styles'
 

@@ -22,7 +22,8 @@ export type SessionType = {
   talk: TalkType,
   room: RoomType ,
   jolter: UserType ,
-  date: string
+  date: string,
+  hour: string
 }
 
 export type TalkProps = {

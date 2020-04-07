@@ -1,4 +1,4 @@
-import type { UsersType } from '../components/types'
+import type { UsersType } from '../../types'
 
 const users = require('@monorepo/backend/Data/Users.json')
 

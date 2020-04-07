@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
-import type { RoomsType, RoomType, TalksType, TalkType, UsersType, UserType } from '../types'
+import type { RoomsType, RoomType, TalksType, TalkType, UsersType, UserType } from '../../types'
 import { Menu } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const SessionRequestInput = ({inputType, data, setField}: { inputType: string, data: RoomsType | UsersType | TalksType,
-  setField: (any)=> void }) => {
-  
+  setField: (inputType: string, data: any)=> void }) => {
+
   const classes = useStyles()
   
   const [input, setInput] = useState()
@@ -38,7 +38,9 @@ const SessionRequestInput = ({inputType, data, setField}: { inputType: string, d
     const id = event.target.value
     setInput(id)
     const chosenItem = data.find(item => item.id === id )
-    setField(chosenItem)
+    if(chosenItem){
+      setField(inputType, chosenItem)
+    }
   }
   
   return (

@@ -1,0 +1,11 @@
+.MuiTableCell-body.pending {
+  color: orange;
+}
+
+.MuiTableCell-body.approved {
+  color: green;
+}
+
+.MuiTableCell-body.declined {
+  color: red;
+}

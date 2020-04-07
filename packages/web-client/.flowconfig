@@ -19,4 +19,5 @@
 
 [options]
 all=true
+esproposal.decorators=ignore
 [strict]

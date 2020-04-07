@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import type { UserType } from '../types'
+import type { UserType } from '../../types'
 import { Button } from '@material-ui/core'
-import { GetUserId as getUserId } from '../../actions/GetUserId'
-import { RemoveUser as removeUser } from '../../actions/RemoveUser'
+import { GetUserId as getUserId } from '../../redux/actions/GetUserId'
+import { RemoveUser as removeUser } from '../../redux/actions/RemoveUser'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'

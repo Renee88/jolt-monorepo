@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, CardContent, CardMedia, Typography, CardActionArea } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
-import type { UserProps } from '../types'
+import type { UserProps } from '../../types'
 
 const useStyles = makeStyles(theme => ({
   userCard: {
