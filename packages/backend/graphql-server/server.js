@@ -1,46 +1,24 @@
-const { ApolloServer, gql } = require('apollo-server');
+const { ApolloServer } = require('apollo-server');
+const typeDefs = require('./schema');
+const resolvers = require('./resolvers')
+const {createStore} = require('./utils')
 
-const typeDefs = gql`
-type User {
-    id: ID!
-    firstName: String!
-    lastName: String!
-    createdAt: Number!
-}
+const store = createStore()
 
-type Talk {
-    id: ID!
-    title: String!
-    createdAt: Number!
-}
+const JolterAPI = require('./data-sources/jolter')
+const TalkAPI = require('./data-sources/talk')
+const SessionAPI = require('./data-sources/session')
 
-type Room {
-    id: ID!
-    name: String!
-    location: String!
-    createdAt: Number!
-}
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    dataSources: () => ({
+        jolterAPI: new JolterAPI({store}),
+        talkAPI: new TalkAPI({store}),
+        sessionAPI: new SessionAPI({store})
+    })
+});
 
-type Session {
-		id: ID!
-		talkId: ID!
-		roomId: ID!
-		jolterId: ID!
-		createdAt: Number!
-
-    talk: Talk!
-    room: Room!
-    jolter: User!
-}
-
-type Query {
-    talk(id: ID!): Talk! # for the kicks
-    room(id: ID!): Room! # these queries won't be used
-    user(id: ID!): User! # In the webapp
-    session(id: ID): Session!
-}
-`
-
-const talks = require('../Data/Talks.json')
-const users = require('../Data/Users.json')
-const rooms = require('../Data/Rooms.json')
+server.listen(5000).then(({ url }) => {
+    console.log(`🚀 Server ready at ${url}`);
+});

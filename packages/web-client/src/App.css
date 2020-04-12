@@ -5,3 +5,8 @@ body{
 a{
     text-decoration: none;
 }
+
+.spinner {
+    margin-top: 45vh;
+    margin-left: 45vw;
+}
