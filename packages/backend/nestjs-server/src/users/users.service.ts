@@ -1,23 +1,24 @@
 import {HttpException, HttpStatus, Injectable, NotFoundException} from "@nestjs/common";
 import {User} from "./user.model";
-import {v4 as uuidv4} from 'uuid'
+import {v4 as uuidv4} from 'uuid';
+const db = require('../../data/db');
 
 @Injectable()
 export class UsersService {
-    private users: User[] = require('../../../Data/Users.json');
 
-    getUsers() {
-        return [...this.users]
+    async getUsers(): Promise<User[]> {
+        const users: User[] = await db.select('*').from('jolters') ;
+        return [...users]
     }
 
-    getUser(id: string): User {
-        const [user] = this.findUser(id) ;
-        return {...user}
+    async getUser(id: string): Promise<User> {
+        const user = await this.findUser(id) ;
+        return user
     }
 
-    addUser( name: string, picture: string, email: string, age: number){
-        const userId = uuidv4() ;
-        const newUser = new User(userId ,name, picture, email, age);
+    async addUser( name: string, picture: string, email: string, age: number): Promise<{id: string}>{
+        const id = uuidv4() ;
+        const newUser = new User(id ,name, picture, email, age) ;
 
         if(!name || !email){
             throw new HttpException({
@@ -28,21 +29,18 @@ export class UsersService {
             }, HttpStatus.BAD_REQUEST)
         }
 
-        this.users.push(newUser) ;
-
-        return {id: userId}
+        await db('jolters').insert(newUser)
+        return {id}
     }
 
-    removeUser(id: string){
-        const userIndex = this.findUser(id)[1] ;
-        this.users.splice(userIndex, 1)
+    async removeUser(id: string){
+        await db('jolters').where('id',id).del()
     }
 
-    findUser(id: string): [User, number]{
-        const userIndex = this.users.findIndex(user => user.id === id);
-        const user = this.users[userIndex] ;
+    async findUser(id: string): Promise<User>{
+        const user : [User, number] = await db.select('*').from('jolters').where('id', id) ;
 
-        if(userIndex === -1){
+        if(!user[0]){
             throw new HttpException({
                 data: user,
                 success: false,
@@ -52,6 +50,6 @@ export class UsersService {
 
         }
 
-        return [user, userIndex]
+        return user[0]
     }
 }

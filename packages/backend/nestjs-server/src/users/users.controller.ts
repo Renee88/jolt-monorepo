@@ -1,7 +1,7 @@
-import {Body, Controller, Delete, Get, Param, Post} from "@nestjs/common";
-import {UsersService} from "./users.service";
-import {User} from "./user.model";
-import {APIResponse, Data} from "../types/responsesTypes";
+import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
+import { UsersService } from "./users.service";
+import { User } from "./user.model";
+import { APIResponse, Data } from "../types/responsesTypes";
 
 
 @Controller('users')
@@ -10,50 +10,47 @@ export class UsersController {
     }
 
     @Get()
-    getUsers(): APIResponse<Data[]> {
+    async getUsers(): Promise<APIResponse<Data[]>> {
         return {
-            data: this.UsersService.getUsers(),
+            data: await this.UsersService.getUsers(),
             success: true
         }
     }
 
     @Get(':id')
-    getUser(
+    async getUser(
         @Param('id') id: string
     ):
-        APIResponse<Data> {
+        Promise<APIResponse<Data>> {
         return {
-            data: this.UsersService.getUser(id),
+            data: await this.UsersService.getUser(id),
             success: true
         }
     }
 
     @Post()
-    addUser(
+    async addUser(
         @Body('name') name: string,
         @Body('picture') picture: string,
         @Body('email') email: string,
         @Body('age') age: number
     ):
-        APIResponse<Data> {
-        const {id} = this.UsersService.addUser(name, picture, email, age);
+        Promise<APIResponse<Data>> {
+        const { id } = await this.UsersService.addUser(name, picture, email, age);
         return {
-            data: {id},
+            data: { id },
             success: true
         }
-
-
     }
 
     @Delete(':id')
-    removeUser(
-        @Param('id')
-            userId: string
+    async removeUser(
+        @Param('id') id: string
     ):
-        APIResponse<Data> {
-        this.UsersService.removeUser(userId);
+        Promise<APIResponse<Data>> {
+        await this.UsersService.removeUser(id);
         return {
-            data: {id: userId},
+            data: { id },
             success: true
         }
     }
