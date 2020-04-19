@@ -1,7 +1,7 @@
 import {Body, Controller, Delete, Get, Param, Post} from "@nestjs/common";
 import {UsersService} from "./users.service";
 import {User} from "./user.model";
-import {APIResponse, Data} from "../responsesTypes";
+import {APIResponse, Data} from "../types/responsesTypes";
 
 
 @Controller('users')
@@ -33,11 +33,10 @@ export class UsersController {
         @Body('name') name: string,
         @Body('picture') picture: string,
         @Body('email') email: string,
-        @Body('age') age: number,
-        @Body('dogs') dogs?: any[]
+        @Body('age') age: number
     ):
         APIResponse<Data> {
-        const {id} = this.UsersService.addUser(name, picture, email, age, dogs);
+        const {id} = this.UsersService.addUser(name, picture, email, age);
         return {
             data: {id},
             success: true

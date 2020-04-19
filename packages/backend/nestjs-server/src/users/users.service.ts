@@ -15,9 +15,9 @@ export class UsersService {
         return {...user}
     }
 
-    addUser( name: string, picture: string, email: string, age: number, dogs: any[]){
+    addUser( name: string, picture: string, email: string, age: number){
         const userId = uuidv4() ;
-        const newUser = new User(userId ,name, picture, email, age, dogs);
+        const newUser = new User(userId ,name, picture, email, age);
 
         if(!name || !email){
             throw new HttpException({

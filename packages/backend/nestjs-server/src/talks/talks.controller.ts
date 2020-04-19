@@ -1,6 +1,6 @@
 import {Body, Controller, Delete, Get, Param, Post} from "@nestjs/common";
 import {TalksService} from "./talks.service";
-import {APIResponse, Data} from "../responsesTypes";
+import {APIResponse, Data} from "../types/responsesTypes";
 
 @Controller('talks')
 export class TalksController {
