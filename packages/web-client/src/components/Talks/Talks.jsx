@@ -14,29 +14,13 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const GET_TALKS = gql`
-    query GetTalks {
-      talks {
-            id
-            name
-            transcript
-      }
-    }
-`
-
-const Talks = () => {
+const Talks = ({talks}: {talks: TalksType}) => {
   const classes = useStyles()
-
-  const { data, loading, error } = useQuery(GET_TALKS)
-
-  if (loading) return <Grid className='spinner' color='#7f58af' />
-  if (error) return <p>ERROR</p>;
-  if (!data) return <p>Oops, my bad </p>
 
 
   return (
     <ScrollToBottom classNAme={classes.scrollList}>
-      {data.talks.map((talk, i) => <Talk key={i} talk={talk} />)}
+      {talks.map((talk, i) => <Talk key={i} talk={talk} />)}
     </ScrollToBottom>
   )
 }

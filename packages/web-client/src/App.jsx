@@ -1,6 +1,8 @@
 import React, { createContext, useState } from 'react'
 import Page from './components/Page/Page.jsx'
 import NavBar from './components/NavBar/NavBar.jsx'
+import Login from './components/Login/Login.jsx'
+import Landing from './components/Landing/Landing.jsx'
 import SessionRequests from './components/SessionRequests/SessionRequests.jsx'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Grid } from 'react-spinners-css'
@@ -19,7 +21,9 @@ const App = () => {
             <Context>
                   <Router>
                         <NavBar />
-                        <Route exact path={`/users`} render={({ match }) => <Page match={match} />} />
+                        <Route exact path='/' component={Login} />
+                        <Route exact path={'/landing'} component={Landing} />
+                        <Route exact path={`/users`} render={({ match }) => <Page match={match} data={users}/>} />
                         <Route exact path={`/talks`} render={({ match }) => <Page match={match} data={talks} />} />
                         <Route exact path={`/rooms`} render={({ match }) => <Page match={match} data={rooms} />} />
                         <Route exact path={`/session-requests`}>

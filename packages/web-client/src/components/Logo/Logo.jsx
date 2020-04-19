@@ -8,7 +8,13 @@ const useStyles = makeStyles(theme => ({
     color: 'white',
     fontFamily: 'poppins',
     fontWeight: 'bold',
-    marginRight: 20
+    marginLeft: 20,
+    cursor: 'pointer'
+  },
+  appName: {
+    fontSize: 40,
+    color: 'white',
+    fontFamily: 'Dancing Script, cursive'
   }
 }))
 
@@ -18,7 +24,7 @@ const Logo = () => {
   
   return (
     <Link to={`/`}>
-      <span className={classes.logo}>Jolt</span>
+      <span className={classes.logo}>Jolt</span><span className={classes.appName}> Curation</span>
     </Link>
   )
 }

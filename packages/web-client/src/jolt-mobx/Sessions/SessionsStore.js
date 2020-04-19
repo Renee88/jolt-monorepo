@@ -9,10 +9,10 @@ class SessionsStore extends Observable {
     return this.sessionRequests
   }
 
-  addSessionRequest = (talk: TalkType, room: RoomType, jolter: UserType, date: string, hour: string): void => {
+  addSessionRequest = (talkID: string, roomID: string, jolterID: string, date: string, hour: string): void => {
     const sessionRequests = [...this.sessionRequests]
     const session = new Session
-    session.setSession(talk, room, jolter, date, hour)
+    session.setSession(talkID, roomID, jolterID, date, hour)
     sessionRequests.push(session)
     this.sessionRequests = sessionRequests
   }

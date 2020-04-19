@@ -9,6 +9,8 @@ import ChatIcon from '@material-ui/icons/Chat'
 import GroupIcon from '@material-ui/icons/Group'
 import { makeStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
+import { Divider } from '@material-ui/core'
+import { Help } from '@material-ui/icons'
 
 const useStyles = makeStyles(theme => ({
   drawer: {
@@ -25,7 +27,7 @@ const DrawerMenu = ({isDrawerOpen, setOpen}: {
 }) => {
   
   const classes = useStyles()
-  const anchor = 'left'
+  const anchor = 'right'
   const MenuTabs = ['Users', 'Talks', 'Rooms', 'Session Requests']
   
   const toggleDrawer = () => {
@@ -70,6 +72,15 @@ const DrawerMenu = ({isDrawerOpen, setOpen}: {
                     </ListItem>
                   </Link>: null
         ))}
+      </List>
+      <Divider/>
+      <List>
+        <Link to='/landing' className={classes.drawerTab}>
+        <ListItem>
+          <ListItemIcon><Help/></ListItemIcon>
+          <ListItemText>Help</ListItemText>
+          </ListItem>
+        </Link>
       </List>
     </div>
   )

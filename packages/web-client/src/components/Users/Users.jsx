@@ -14,30 +14,15 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const GET_JOLTERS = gql`
-    query GetJolters {
-      jolters {
-            id
-            name
-            picture
-            email
-      }
-}`
 
-const Users = () => {
+const Users = ({users}: {users: UsersType}) => {
 
   const classes = useStyles()
-
-  const { data, loading, error } = useQuery(GET_JOLTERS);
-
-  if (loading) return <Grid className='spinner' color='#7f58af' />;
-  if (error) return <p>ERROR</p>;
-  if (!data) return <p>Oops, my bad </p>
 
 
   return (
     <ScrollToBottom className={classes.scrollList}>
-      {data.jolters.map((user, i) => <User key={i} user={user} />)}
+      {users.map((user, i) => <User key={i} user={user} />)}
     </ScrollToBottom>
   )
 }

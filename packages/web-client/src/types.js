@@ -3,8 +3,7 @@ export type UserType = {
   name: string,
   age: ?number,
   email: string,
-  picture: string,
-  dogs: any[]
+  picture: string
 }
 
 export type UserProps = {
@@ -19,9 +18,9 @@ export type TalkType = {
 
 export type SessionType = {
   id: string,
-  talk: TalkType,
-  room: RoomType ,
-  jolter: UserType ,
+  talkID: string,
+  roomID: string ,
+  jolterID: string,
   date: string,
   hour: string
 }
@@ -40,3 +39,17 @@ export type UsersType = Array<UserType>
 export type RoomsType = Array<RoomType>
 export type TalksType = Array<TalkType>
 export type SessionsType = Array<SessionType>
+
+export type OwnProps = $ReadOnly<{|
+  users: UsersType,
+  rooms: RoomsType,
+  talks: TalksType,
+  dispatch: any,
+  comingFromConnect:string
+|}>;
+
+export type Props = $ReadOnly<{|
+  ...OwnProps,
+  comingFromConnect: string,
+|}>
+

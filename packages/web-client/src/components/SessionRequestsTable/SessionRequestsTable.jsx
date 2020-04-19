@@ -28,14 +28,14 @@ class SessionRequestTable extends Component<*, *> {
           </TableHead>
           <TableBody>
             {sessions.length ? sessions.map((session, i) => {
-              const { id, jolter, talk, room, date , hour} = session.session
+              const { id, jolterID, talkID, roomID, date , hour} = session.session
               console.log(id)
               return(<SessionRequest key={i}
                 reqNumber={i}
                 id={id}
-                jolter={jolter}
-                talk={talk}
-                room={room}
+                jolterID={jolterID}
+                talkID={talkID}
+                roomID={roomID}
                 date={date}
                 hour={hour}
                 getSessionRequests={getSessionRequests} />

@@ -49,15 +49,6 @@ const Room = ({room}: { room: RoomType }) => {
             <p className={classes.row}>In the room: {room.participants.length}</p>
           </div>
         </CardContent>
-        <CardActions>
-          <Button size='small' variant='contained' color='primary'
-                  onClick={() => {
-                    if(userId) {
-                      dispatch(addUserToRoom(user, roomId))
-                      dispatch(resetUserId())
-                    }
-                  }}> Join </Button>
-        </CardActions>
       </Card>
     </Link>
   )

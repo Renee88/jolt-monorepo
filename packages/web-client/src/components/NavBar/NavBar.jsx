@@ -10,7 +10,8 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#4B3FC9',
+    // backgroundColor: '#4B3FC9',
+    background: 'linear-gradient(45deg,#838DFF,#F88AC1)',
     height: '10vh'
   }
 }))
@@ -21,9 +22,9 @@ const NavBar = () => {
   
   return (
     <div className={classes.navigation}>
-      <Menu onClick={() => setOpen(true)} style={{color: 'white', marginLeft: 20}}/>
-      <DrawerMenu isDrawerOpen={isDrawerOpen} setOpen={setOpen}/>
       <Logo/>
+      <DrawerMenu isDrawerOpen={isDrawerOpen} setOpen={setOpen}/>
+      <Menu onClick={() => setOpen(true)} style={{color: 'white', marginRight: 20}}/>
     </div>
   )
 }

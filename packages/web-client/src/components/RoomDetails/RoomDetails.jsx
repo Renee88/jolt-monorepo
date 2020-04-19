@@ -4,33 +4,25 @@ import { Grid } from 'react-spinners-css'
 
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
+import { useSelector } from 'react-redux'
 
-const GET_ROOMS = gql`
-query GetRooms {
-  rooms {
-        id
-        name
-  }
-}`
 
 const RoomDetails = ({ id }: { id: string}) => {
 
-  const { data, loading, error } = useQuery(GET_ROOMS);
+  const [room, setRoom] = useState({})
 
-  if (loading) return <Grid className='spinner' color='#7f58af' />;
-  if (error) return <p>ERROR</p>;
-  if (!data) return <p>Oops, my bad </p>
+  const rooms = useSelector(state => state.rooms)
 
-  const { rooms } : {rooms: RoomsType} = data
-  const chosenRoom: ?RoomType = rooms.find((room: RoomType) => room.id === id)
-
+  useEffect(() => {
+    const chosenRoom = rooms.find((room,i) => room.id === id)
+    setRoom(chosenRoom)
+  })
 
   return (
-    chosenRoom ?
+    
       <div>
-        {chosenRoom.name}
+        {room ? room.name: null}
       </div>
-      : null
   )
 }
 

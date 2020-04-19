@@ -5,7 +5,7 @@ import DateFnsUtils from '@date-io/date-fns'
 import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers'
 import { useEffect } from 'react'
 
-const DatePicker = ({ getDateInput, getHourInput }: { getDateInput: (date: {}) => void, getHourInput: (hour: {}) => void }) => {
+const DatePicker = ({ getDateInput, getHourInput }: { getDateInput: (date: string) => void, getHourInput: (hour: string) => void }) => {
 
   const today = new Date()
   const [selectedDate, setDateInput] = useState(today)

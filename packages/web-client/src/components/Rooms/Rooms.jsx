@@ -14,24 +14,8 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const GET_ROOMS = gql`
-query GetRooms {
-  rooms {
-        id
-        name
-  }
-}`
-
-const Rooms = ({ userId }: { userId: string }) => {
+const Rooms = ({ userId, rooms }: { userId: string, rooms: RoomsType }) => {
   const classes = useStyles()
-
-  const { data, loading, error } = useQuery(GET_ROOMS);
-
-  if (loading) return <Grid className='spinner' color='#7f58af' />;
-  if (error) return <p>ERROR</p>;
-  if (!data) return <p>Oops, my bad </p>
-
-  const { rooms } = data
 
   return (
     <ScrollToBottom className={classes.scrollList}>

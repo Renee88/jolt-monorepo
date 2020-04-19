@@ -1,21 +1,21 @@
 import { Observable } from "@jolt-us/jolt-mobx/lib/Observable";
 import { v4 as uuidv4 } from 'uuid'
-import { SessionType, TalkType, UserType, RoomType } from '../../types'
+import type { SessionType, TalkType, UserType, RoomType } from '../../types'
 
 class SessionStore extends Observable {
 
   session: SessionType = {}
 
-  setTalk = (talk: TalkType) => {
-    this.session.talk = talk
+  setTalk = (talkID: string) => {
+    this.session.talkID = talkID
   }
 
-  setRoom = (room: RoomType) => {
-    this.session.room = room
+  setRoom = (roomID: string) => {
+    this.session.roomID = roomID
   }
 
-  setJolter = (jolter: UserType) => {
-    this.session.jolter = jolter
+  setJolter = (jolterID: string) => {
+    this.session.jolterID = jolterID
   }
 
   setDate = (date: string, hour: string) => {
@@ -23,13 +23,12 @@ class SessionStore extends Observable {
     this.session.hour = hour
   }
 
-  setSession = (talk: TalkType, room: RoomType, jolter: UserType, date:string, hour: string) => {
+  setSession = (talkID: string, roomID: string, jolterID: string, date:string, hour: string) => {
     const id = uuidv4()
     this.session.id = id
-    console.log(id)
-    this.setTalk(talk)
-    this.setRoom(room)
-    this.setJolter(jolter)
+    this.setTalk(talkID)
+    this.setRoom(roomID)
+    this.setJolter(jolterID)
     this.setDate(date, hour)
   }
 
