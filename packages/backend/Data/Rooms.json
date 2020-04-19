@@ -1,32 +1,26 @@
 [
   {
     "id": "1",
-    "name": "purple",
-    "participants": []
+    "name": "purple"
   },
   {
     "id": "2",
-    "name": "pink",
-    "participants": []
+    "name": "pink"
   },
   {
     "id": "3",
-    "name": "yellow",
-    "participants": []
+    "name": "yellow"
   },
   {
     "id": "4",
-    "name": "blue",
-    "participants": []
+    "name": "blue"
   },
   {
     "id": "5",
-    "name": "orange",
-    "participants": []
+    "name": "orange"
   },
   {
     "id": "6",
-    "name": "red",
-    "participants": []
+    "name": "red"
   }
 ]
