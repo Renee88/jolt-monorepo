@@ -1,11 +1,7 @@
 type ID = string
 
-export type SessionType = {
+export type Session = {
     id: ID,
-    talkID: ID,
-    jolterID: ID,
-    roomID: ID,
-    date: string,
-    hour: string,
+    sessionRequestID: ID,
     status: string
 }

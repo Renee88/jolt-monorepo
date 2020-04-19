@@ -1,6 +1,6 @@
-import {Body, Controller, Delete, Get, Param, Post} from "@nestjs/common";
-import {TalksService} from "./talks.service";
-import {APIResponse, Data} from "../types/responsesTypes";
+import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
+import { TalksService } from "./talks.service";
+import { APIResponse, Data } from "../types/responsesTypes";
 
 @Controller('talks')
 export class TalksController {
@@ -8,44 +8,43 @@ export class TalksController {
     }
 
     @Get()
-    getTalks(): APIResponse<Data[]> {
+    async getTalks(): Promise<APIResponse<Data[]>> {
         return {
-            data: this.TalksService.getTalks(),
+            data: await this.TalksService.getTalks(),
             success: true
         }
     }
 
     @Get(':id')
-    getTalk(
+    async getTalk(
         @Param('id') talkId: string
-    ): APIResponse<Data> {
+    ): Promise<APIResponse<Data>> {
         return {
-            data: this.TalksService.getTalk(talkId),
+            data: await this.TalksService.getTalk(talkId),
             success: true
         }
     }
 
     @Post()
-    addTalk(
+    async addTalk(
         @Body('name') talkName: string,
         @Body('transcript') transcript: string
-    ): APIResponse<Data> {
-        const talkId = this.TalksService.addTalk(talkName, transcript);
+    ): Promise<APIResponse<Data>> {
+        const { id } = await this.TalksService.addTalk(talkName, transcript);
         return {
-            data: {id: talkId},
+            data: { id },
             success: true
         }
     }
 
     @Delete(':id')
-    deleteTalk(
-        @Param('id')
-            talkId: string
+    async deleteTalk(
+        @Param('id') id: string
     ):
-        APIResponse < Data > {
-        this.TalksService.deleteTalk(talkId);
+        Promise<APIResponse<Data>> {
+        await this.TalksService.deleteTalk(id);
         return {
-            data: {id: talkId},
+            data: { id },
             success: true
         }
     }

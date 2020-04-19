@@ -9,6 +9,7 @@ interface APISuccessResponse<Data> {
 
 type ID = {id: string}
 
+
 export type Data = User | Talk | Room | null | ID
 
 interface APIErrorResponse<Data> {

@@ -1,28 +1,31 @@
 import { Injectable, HttpStatus, HttpException } from "@nestjs/common";
 import { v4 as uuidv4 } from 'uuid';
 import { SessionsService } from "../sessions/sessions.service";
+import type { SessionRequest } from "../types/SessionRequest";
+import { SessionRequest as SessionRequestModel} from "./sessionRequest.model";
+const knex = require('../../data/db')
 
 @Injectable()
 export class SessionRequestsService {
-    private sessionRequests = []
-    private sessions = []
 
-    constructor(private readonly SessionsService: SessionsService){}
+    constructor(private readonly SessionsService: SessionsService) { }
 
-    getSessionRequests() {
-        return [...this.sessionRequests]
+    async getSessionRequests(): Promise<SessionRequest[]> {
+        const sessionRequests = await knex.select('*').from('session_requests')
+        return [...sessionRequests]
     }
 
-    getSessionRequest(id) {
-        const [session, sessionIndex] = this.findSession(id)
+    async getSessionRequest(id): Promise<SessionRequest> {
+        const session = await this.findSession(id)
         return session
     }
 
-    addSessionRequest(sessionRequest) {
+    async addSessionRequest(sessionRequest) {
         const id = uuidv4()
-        sessionRequest.id = id
+        const { jolterID, talkID, roomID, date, hour, status } = sessionRequest
+        const newSessionRequest = new SessionRequestModel(id, jolterID, talkID, roomID, date, hour, status)
 
-        if (!sessionRequest.talkID || !sessionRequest.jolterID || !sessionRequest.roomID || !sessionRequest.hour || !sessionRequest.date) {
+        if (!newSessionRequest.talkID || !newSessionRequest.jolterID || !newSessionRequest.roomID || !newSessionRequest.hour || !newSessionRequest.date) {
             throw new HttpException({
                 data: sessionRequest,
                 success: false,
@@ -32,39 +35,33 @@ export class SessionRequestsService {
 
         }
 
-        if(!sessionRequest.status){
+        if (!newSessionRequest.status) {
             sessionRequest.status = 'PENDING'
         }
 
-        this.sessionRequests.push(sessionRequest)
-        return [...this.sessionRequests]
+        await knex('session_requests').insert(newSessionRequest)
+        return { id }
     }
 
-    deleteSessionRequest(id) {
-        const [sessionRequest, sessionIndex] = this.findSession(id)
-        this.sessionRequests.splice(sessionIndex, 1)
-        return [...this.sessionRequests]
+    async deleteSessionRequest(id): Promise<{id: string}> {
+        await knex('session_requests').where('id', id).del()
+        return {id}
     }
 
-    updateSessionRequestStatus(status, id) {
-        const [sessionRequest, sessionIndex] = this.findSession(id)
-        sessionRequest.status = status
-        const updatedSessionRequest = sessionRequest
+    async updateSessionRequestStatus(status, id) {
+        await knex('session_requests').where('id', id).update({ status })
 
-        if(status === 'APPROVED'){
-            this.SessionsService.addSession(updatedSessionRequest)
+        if (status === 'APPROVED') {
+            await this.SessionsService.addSession(status, id)
         }
-        
-        this.sessionRequests.splice(sessionIndex,1, updatedSessionRequest)
-        return [...this.sessionRequests]
+        return { id }
     }
 
 
-    findSession(id) {
-        const sessionRequestIndex = this.sessionRequests.findIndex(sessionRequest => sessionRequest.id === id)
-        const sessionRequest = this.sessionRequests[sessionRequestIndex]
+    async findSession(id) {
+        const sessionRequest = await knex.select('*').from('session_requests').where('id', id)
 
-        if (sessionRequestIndex === -1) {
+        if (!sessionRequest[0]) {
             throw new HttpException({
                 data: sessionRequest,
                 success: false,
@@ -73,6 +70,6 @@ export class SessionRequestsService {
             }, HttpStatus.NOT_FOUND)
         }
 
-        return [sessionRequest, sessionRequestIndex]
+        return sessionRequest[0]
     }
 }

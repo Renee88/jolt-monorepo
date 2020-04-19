@@ -1,13 +1,13 @@
 import {HttpException, HttpStatus, Injectable, NotFoundException} from "@nestjs/common";
 import {User} from "./user.model";
 import {v4 as uuidv4} from 'uuid';
-const db = require('../../data/db');
+const knex = require('../../data/db');
 
 @Injectable()
 export class UsersService {
 
     async getUsers(): Promise<User[]> {
-        const users: User[] = await db.select('*').from('jolters') ;
+        const users: User[] = await knex.select('*').from('jolters') ;
         return [...users]
     }
 
@@ -29,16 +29,16 @@ export class UsersService {
             }, HttpStatus.BAD_REQUEST)
         }
 
-        await db('jolters').insert(newUser)
+        await knex('jolters').insert(newUser)
         return {id}
     }
 
     async removeUser(id: string){
-        await db('jolters').where('id',id).del()
+        await knex('jolters').where('id',id).del()
     }
 
     async findUser(id: string): Promise<User>{
-        const user : [User, number] = await db.select('*').from('jolters').where('id', id) ;
+        const user : [User, number] = await knex.select('*').from('jolters').where('id', id) ;
 
         if(!user[0]){
             throw new HttpException({

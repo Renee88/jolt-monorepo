@@ -9,57 +9,61 @@ export class SessionRequestsController {
     }
 
     @Get()
-    getSessionRequests(): APIResponse<Data[]> {
+    async getSessionRequests(): Promise<APIResponse<Data[]>> {
         return {
-            data: this.SessionRequestsService.getSessionRequests(),
+            data: await this.SessionRequestsService.getSessionRequests(),
             success: true
         }
     }
 
     @Get(':id')
-    getSessionRequest(
-        @Param('id') sessionID: string
-    ): APIResponse<Data> {
+    async getSessionRequest(
+        @Param('id') id: string
+    ): Promise<APIResponse<Data>> {
+        const sessionRequest = await this.SessionRequestsService.getSessionRequest(id)
         return {
-            data: this.SessionRequestsService.getSessionRequest(sessionID),
+            data: sessionRequest,
             success: true
         }
     }
 
     @Post()
-    addSessionRequest(
+    async addSessionRequest(
         @Body('talkID') talkID: string,
         @Body('jolterID') jolterID: string,
         @Body('roomID') roomID: string,
         @Body('hour') hour: string,
         @Body('date') date: string, 
         @Body('status') status: string
-    ): APIResponse<Data[]> {
+    ): Promise<APIResponse<Data>> {
         const session = { talkID, jolterID, roomID, hour, date, status }
+        const {id} = await this.SessionRequestsService.addSessionRequest(session)
         return {
-            data: this.SessionRequestsService.addSessionRequest(session),
+            data: {id} ,
             success: true
         }
 
     }
 
     @Delete(':id')
-    deleteSessionRequest(
+    async deleteSessionRequest(
         @Param('id') sessionID: string
-    ): APIResponse<Data[]> {
+    ): Promise<APIResponse<Data>> {
+        const {id} = await this.SessionRequestsService.deleteSessionRequest(sessionID)
         return {
-            data: this.SessionRequestsService.deleteSessionRequest(sessionID),
+            data: {id},
             success: true
         }
     }
 
     @Put()
-    updateSessionRequestStatus(
-        @Body('id') sessionID: string,
+    async updateSessionRequestStatus(
+        @Body('id') id: string,
         @Body('status') status: string
-    ): APIResponse<Data[]> {
+    ): Promise<APIResponse<Data>> {
+        await this.SessionRequestsService.updateSessionRequestStatus(status, id)
         return {
-            data: this.SessionRequestsService.updateSessionRequestStatus(status, sessionID),
+            data: {id} ,
             success: true
         }
     }

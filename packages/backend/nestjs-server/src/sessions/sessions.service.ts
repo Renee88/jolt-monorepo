@@ -1,37 +1,49 @@
 import { Injectable, HttpStatus, HttpException } from "@nestjs/common";
 import { v4 as uuidv4 } from 'uuid';
+import type { Session } from '../types/SessionType'
+import {Session as SessionModel} from './sessions.model'
+const knex = require('../../data/db')
 
 @Injectable()
 export class SessionsService {
-    private sessions = []
 
-    getSessions() {
-        return [...this.sessions]
+    async getSessions(): Promise<Session[]> {
+        const sessions = await knex.select('*').from('sessions')
+        return [...sessions]
     }
 
-    addSession(sessionRequest) {
+    async getSession(id): Promise<Session>{
+        const session = await this.findSession(id)
+        return session
+    }
+
+    async addSession(status, sessionRequestID): Promise<{ id: string }> {
         const id = uuidv4()
-        const session = {
-            id,
-            sessionRequestID: sessionRequest.id,
-            status: sessionRequest.status
+        const session = new SessionModel(id, sessionRequestID, status)
+
+        if (!session.sessionRequestID || !session.status) {
+            throw new HttpException({
+                data: session,
+                success: false,
+                errorCode: HttpStatus.BAD_REQUEST,
+                error: 'Make sure you fill in all the necessary details'
+            }, HttpStatus.BAD_REQUEST)
+
         }
-        
-        this.sessions.push(session)
+
+        const newSession = await knex('sessions').insert(session)
+        console.log(newSession)
+        return { id }
     }
 
-    updateSessionStatus(status, id) {
-        const [session, sessionIndex] = this.findSession(id)
-        session.status = status
-        this.sessions.splice(sessionIndex, 1, session)
-        return [...this.sessions]
+    async updateSessionStatus(status, id) {
+        await knex('sessions').where('id', id).update({status})
     }
 
-    findSession(id) {
-        const sessionIndex = this.sessions.findIndex(session => session.id === id)
-        const session = this.sessions[sessionIndex]
+    async findSession(id): Promise<Session> {
+       const session = await knex.select('*').where('id', id)
 
-        if (sessionIndex === -1) {
+        if (!session[0]) {
             throw new HttpException({
                 data: session,
                 success: false,
@@ -40,6 +52,6 @@ export class SessionsService {
             }, HttpStatus.NOT_FOUND)
         }
 
-        return [session, sessionIndex]
+        return session[0]
     }
 }
