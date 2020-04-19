@@ -9,6 +9,15 @@ module.exports = {
         talk: (_, { id }, { dataSources }) =>
             dataSources.talkAPI.getTalk({ id }),
         session: (_, { id }, { dataSource }) =>
-            dataSource.sessionAPI.getSession({ id })
+            dataSource.sessionAPI.getSession({ id }),
+        sessions: (_, __, {dataSources}) => 
+            dataSources.sessionAPI.getSessions(),
+        rooms: (_, __, {dataSources}) => 
+            dataSources.roomsAPI.getRooms()
+        
+    },
+    Mutation: {
+        addSession: (_, { talkID, jolterID, roomID }, { dataSources }) =>
+            dataSources.sessionAPI.addSession(talkID, jolterID, roomID)
     }
 }

@@ -12,7 +12,6 @@ class TalkAPI extends DataSource {
 
     async getTalks(){
         const talks = await this.store.talks
-        console.log(talks)
         return talks
     }
 

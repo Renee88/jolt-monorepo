@@ -1,15 +1,6 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
-  type Dog {
-    dog_name: String
-    picture: String
-    gender: String
-    age: Float
-    weight: Float
-    vaccinated: Boolean
-    neutered: Boolean
-  }
 
   type User {
     id: ID!
@@ -17,7 +8,6 @@ const typeDefs = gql`
     picture: String
     email: String!
     age: Float!
-    dogs: [Dog]
     createdAt: String!
   }
 
@@ -36,12 +26,11 @@ const typeDefs = gql`
   }
 
   type Session {
-		id: ID!
-		talkId: ID!
-		roomId: ID!
-		jolterId: ID!
+		sessionID: ID!
+		talkID: ID!
+		roomID: ID!
+		jolterID: ID!
 		createdAt: String!
-
     talk: Talk!
     room: Room!
     jolter: User!
@@ -55,6 +44,16 @@ const typeDefs = gql`
     jolter(id: ID!): User! # In the webapp
     jolters: [User]
     session(id: ID): Session!
+    sessions: [Session]
+  }
+
+  type SessionAddedResponse {
+    success: Boolean!
+    sessionID: String
+  }
+
+  type Mutation {
+    addSession(talkID: ID!, jolterID: ID!, roomID: ID!): SessionAddedResponse!
   }
 `;
 
