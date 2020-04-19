@@ -1,6 +1,6 @@
 import {Body, Controller, Delete, Get, Param, Post} from "@nestjs/common";
 import {RoomsService} from "./rooms.service";
-import {APIResponse, Data} from "../responsesTypes";
+import {APIResponse, Data} from "../types/responsesTypes";
 
 @Controller('rooms')
 export class RoomsController {

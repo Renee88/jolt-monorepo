@@ -1,25 +1,27 @@
-import {HttpException, HttpStatus, Injectable, NotFoundException} from "@nestjs/common";
-import {Talk} from "./talk.model";
-import {v4 as uuidv4} from 'uuid'
+import { HttpException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
+import { Talk } from "./talk.model";
+import { v4 as uuidv4 } from 'uuid';
+const knex = require('../../data/db')
+
 
 @Injectable()
 export class TalksService {
-    private talks: Talk[] = require('../../../Data/Talks.json');
 
-    getTalks() {
-        return [...this.talks]
+    async getTalks(): Promise<Talk[]> {
+        const talks = await knex.select('*').from('talks')
+        return [...talks]
     }
 
-    getTalk(id: string): Talk {
-        const talk = this.findTalk(id)[0];
-        return {...talk}
+    async getTalk(id: string): Promise<Talk> {
+        const talk = await this.findTalk(id);
+        return { ...talk }
     }
 
-    addTalk(name: string, transcript: string) {
-        const talkId = uuidv4();
-        const newTalk = new Talk(name, transcript, talkId);
+    async addTalk(name: string, transcript: string): Promise<{ id: string }> {
+        const id = uuidv4();
+        const newTalk = new Talk(id, name, transcript);
 
-        if(!name || !transcript){
+        if (!name || !transcript) {
             throw new HttpException({
                 data: newTalk,
                 success: false,
@@ -28,20 +30,18 @@ export class TalksService {
             }, HttpStatus.BAD_REQUEST)
         }
 
-        this.talks.push(newTalk);
-        return talkId
+        await knex('talks').insert(newTalk)
+        return { id }
     }
 
-    deleteTalk(id:string){
-        const talkIndex = this.findTalk(id)[1];
-        this.talks.splice(talkIndex,1)
+    async deleteTalk(id: string) {
+        await knex('talks').where('id', id).del()
     }
 
-    findTalk(id: string): [Talk, number] {
-        const talkIndex = this.talks.findIndex(talk => talk.id === id);
-        const talk = this.talks[talkIndex];
+    async findTalk(id: string): Promise<Talk> {
+        const talk = await knex.select('*').from('talks').where('id', id)
 
-        if(talkIndex === -1){
+        if (!talk[0]) {
             throw new HttpException({
                 data: talk,
                 success: false,
@@ -51,7 +51,7 @@ export class TalksService {
 
         }
 
-        return [talk, talkIndex]
+        return talk[0]
 
     }
 }

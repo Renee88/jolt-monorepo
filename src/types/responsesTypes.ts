@@ -1,6 +1,6 @@
-import {User} from "./users/user.model";
-import {Talk} from "./talks/talk.model";
-import {Room} from "./rooms/room.model";
+import {User} from "../users/user.model";
+import {Talk} from "../talks/talk.model";
+import {Room} from "../rooms/room.model";
 
 interface APISuccessResponse<Data> {
     data: Data;
@@ -8,6 +8,7 @@ interface APISuccessResponse<Data> {
 }
 
 type ID = {id: string}
+
 
 export type Data = User | Talk | Room | null | ID
 
