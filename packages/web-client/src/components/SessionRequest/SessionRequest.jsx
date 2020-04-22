@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
-import type { RoomType, TalkType, UserType } from '../../types'
+import type { RoomType, TalkType, UserType, Props, OwnProps } from '../../types'
 import StatusMenu from '../StatusMenu/StatusMenu.jsx'
 import { makeStyles } from '@material-ui/core/styles'
 import {connect as connectRedux} from 'react-redux'
@@ -9,6 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { connect } from '@jolt-us/jolt-mobx/lib/connect'
 import { Component } from 'react'
 import { Button } from '@material-ui/core'
+import './SessionRequest.css'
 
 const buttonStyle = {
   APPROVED: {
@@ -23,7 +24,8 @@ const buttonStyle = {
 }
 
 @connect((store: any) => ({
-  removeSessionRequest: store.sessionsStore.removeSessionRequest
+  updateRequestStatus: store.sessionRequestsStore.updateRequestStatus,
+  removeSessionRequest: store.sessionRequestsStore.removeSessionRequest
 }))
 class SessionRequest extends Component<*, *> {
 
@@ -36,16 +38,17 @@ class SessionRequest extends Component<*, *> {
     }
   }
 
-  setRequestStatus = (status: string) => {
-    this.setState({ status })
+  setRequestStatus = async (id: string, status: string) => {
+    await this.props.updateRequestStatus(id, status)
+    this.props.getSessionRequests()
   }
 
   setAnchorEl = (anchorEl: any) => {
     this.setState({ anchorEl })
   }
 
-  removeSessionRequest = (id: string) => {
-    this.props.removeSessionRequest(id)
+  removeSessionRequest = async (id: string) => {
+    await this.props.removeSessionRequest(id)
     this.props.getSessionRequests()
   }
 
@@ -54,9 +57,11 @@ class SessionRequest extends Component<*, *> {
     this.setAnchorEl(event.currentTarget)
   }
 
+
+
   render() {
-    const { reqNumber, id, jolterID, talkID, roomID, date, hour, rooms, talks, jolters } = this.props
-    const { status, anchorEl } = this.state
+    const { reqNumber, id, jolterID, talkID, roomID, date, hour, rooms, talks, jolters, status } = this.props
+    const { anchorEl } = this.state
 
     const talk = talks.find(talk => talk.id === talkID)
     const jolter = jolters.find(jolter => jolter.id === jolterID)
@@ -80,8 +85,8 @@ class SessionRequest extends Component<*, *> {
             onClick={this.handleClick}><Button style={buttonStyle[status]}>{status}</Button></TableCell> :
             status === 'DECLINED' ? <TableCell className='declined' align="left"
               onClick={this.handleClick}><Button style={buttonStyle[status]}>{status}</Button></TableCell> : null}
-        <StatusMenu anchorEl={anchorEl} setAnchorEl={this.setAnchorEl} setStatus={this.setRequestStatus} />
-        <TableCell align="left" onClick={() => this.removeSessionRequest(id)}><DeleteIcon /></TableCell>
+        <StatusMenu anchorEl={anchorEl} setAnchorEl={this.setAnchorEl} setStatus={this.setRequestStatus} sessionRequestID={id} />
+        <TableCell className="delete-icon" align="left" onClick={() => this.removeSessionRequest(id)}><DeleteIcon /></TableCell>
       </TableRow> : null
     )
   }

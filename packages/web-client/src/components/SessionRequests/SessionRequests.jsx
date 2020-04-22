@@ -24,7 +24,7 @@ const styles = {
 };
 
 @connect((store: any) => ({
-    getSessionRequests: store.sessionsStore.getSessionRequests
+  getSessionRequests: store.sessionRequestsStore.getSessionRequests
 }))
 class SessionRequests extends Component<*, *> {
 
@@ -38,19 +38,23 @@ class SessionRequests extends Component<*, *> {
   }
 
   toggleModalOpen = () => {
-    const state = {...this.state};
+    const state = { ...this.state };
     this.setState({ open: !this.state.open });
   };
 
 
-  getSessionRequests = () => {
-    const sessionRequests = this.props.getSessionRequests()
+  getSessionRequests = async () => {
+    const { getSessionRequests } = this.props
+    const sessionRequests =  await getSessionRequests()
     this.setState({sessionRequests})
   }
 
+  componentDidMount = () => {
+      this.getSessionRequests()
+  }
 
   render() {
-    const sessionRequests = this.props.getSessionRequests()
+    const { sessionRequests } = this.state
 
     return (
       <div>
@@ -62,8 +66,8 @@ class SessionRequests extends Component<*, *> {
           <AddIcon style={{ marginRight: 10 }} /> New Session Request
         </Button>
         <p id="session-requests-title">Session requests</p>
-        <SessionRequestTable sessions={sessionRequests} getSessionRequests={this.getSessionRequests}/>
-        <SessionRequestModal open={this.state.open} setOpen={this.toggleModalOpen} />
+        <SessionRequestTable sessionRequests={sessionRequests} getSessionRequests={this.getSessionRequests} />
+        <SessionRequestModal open={this.state.open} setOpen={this.toggleModalOpen} getSessionRequests={this.getSessionRequests} />
       </div>
     );
   }

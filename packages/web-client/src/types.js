@@ -22,7 +22,8 @@ export type SessionType = {
   roomID: string ,
   jolterID: string,
   date: string,
-  hour: string
+  hour: string,
+  status: string
 }
 
 export type TalkProps = {
@@ -41,7 +42,7 @@ export type TalksType = Array<TalkType>
 export type SessionsType = Array<SessionType>
 
 export type OwnProps = $ReadOnly<{|
-  users: UsersType,
+  jolters: UsersType,
   rooms: RoomsType,
   talks: TalksType,
   dispatch: any,
@@ -52,4 +53,15 @@ export type Props = $ReadOnly<{|
   ...OwnProps,
   comingFromConnect: string,
 |}>
+
+export type SessionProps = {
+  reqNumber: number,
+  id: string,
+  jolterID: string,
+  talkID: string,
+  roomID: string,
+  date: string,
+  hour: string,
+  status: string
+}
 

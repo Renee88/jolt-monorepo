@@ -1,17 +1,18 @@
 import React from 'react'
 import { Menu, MenuItem } from '@material-ui/core'
 
-const StatusMenu = ({anchorEl, setAnchorEl, setStatus}: { anchorEl: any, setAnchorEl: ({} | null) => void, setStatus: (string)=> void }) => {
-  const requsetStatuses = ['PENDING', 'APPROVED', 'DECLINED']
-  
-  const handleClose = (event, index) => {
-    const requestStatus = requsetStatuses[index]
+const StatusMenu = ({ anchorEl, setAnchorEl, setStatus, sessionRequestID}: 
+  { anchorEl: any, setAnchorEl: ({ } | null) => void, setStatus: (id: string, status: string) => void , sessionRequestID: string}) => {
+  const requestStatuses = ['PENDING', 'APPROVED', 'DECLINED']
+
+  const handleClose = async (event, index) => {
+    const requestStatus = requestStatuses[index]
     if (requestStatus) {
-      setStatus(requestStatus)
+      await setStatus(sessionRequestID, requestStatus)
     }
     setAnchorEl(null)
   }
-  
+
   return (
     <Menu
       id="simple-menu"
@@ -20,11 +21,11 @@ const StatusMenu = ({anchorEl, setAnchorEl, setStatus}: { anchorEl: any, setAnch
       open={Boolean(anchorEl)}
       onClose={handleClose}
     >
-      
-      {requsetStatuses.map((requsetStatus, index) =>
-        <MenuItem key={index} onClick={(event) => handleClose(event, index)}>{requsetStatus}</MenuItem>
+
+      {requestStatuses.map((requestStatus, index) =>
+        <MenuItem key={index} onClick={(event) => handleClose(event, index)}>{requestStatus}</MenuItem>
       )}
-    
+
     </Menu>
   )
 }

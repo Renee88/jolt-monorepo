@@ -4,23 +4,25 @@
     justify-content: center;
   }
 
-  .paper {
-    display: flex;
-    flex-direction: column;
-    width: 40vw;
-    height: 30vh;
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 1px 1px 1px ;
-    padding: 7px;
-  }
+.paper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 600px;
+  height: 305px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px ;
+  padding: 7px;
+}
+#session-request-inputs{
+  display: flex;
+  width: inherit;
+  justify-content: space-evenly;
+}
 
-  #session-request-inputs{
-    display: flex
-  }
-
-  .success-message {
-    color: green;
-    text-align: center;
-    font-family: poppins;
-  }
+.modal-input {
+  width: 150px;
+  color: #4b3fc9;
+}

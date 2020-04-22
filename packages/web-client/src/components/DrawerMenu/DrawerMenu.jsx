@@ -7,6 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import ChatIcon from '@material-ui/icons/Chat'
 import GroupIcon from '@material-ui/icons/Group'
+import EventIcon from '@material-ui/icons/Event';
 import { makeStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import { Divider } from '@material-ui/core'
@@ -28,7 +29,7 @@ const DrawerMenu = ({isDrawerOpen, setOpen}: {
   
   const classes = useStyles()
   const anchor = 'right'
-  const MenuTabs = ['Users', 'Talks', 'Rooms', 'Session Requests']
+  const MenuTabs = ['Users', 'Talks', 'Rooms', 'Session Requests', 'Sessions']
   
   const toggleDrawer = () => {
     setOpen(false)
@@ -68,6 +69,13 @@ const DrawerMenu = ({isDrawerOpen, setOpen}: {
                   <Link key={i} to={`/session-requests`} className={classes.drawerTab}>
                     <ListItem button key={tab}>
                       <ListItemIcon><GroupIcon/></ListItemIcon>
+                      <ListItemText primary={tab}/>
+                    </ListItem>
+                  </Link>:
+                  tab==='Sessions' ?
+                  <Link key={i} to={`/sessions`} className={classes.drawerTab}>
+                    <ListItem button key={tab}>
+                      <ListItemIcon><EventIcon/></ListItemIcon>
                       <ListItemText primary={tab}/>
                     </ListItem>
                   </Link>: null

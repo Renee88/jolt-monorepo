@@ -1,8 +1,8 @@
 import type { TalksType } from '../../types'
 
-const talks = require('@monorepo/backend/Data/Talks.json')
 
-const TalksReducer = (state: TalksType = talks, action: any) => {
+
+const TalksReducer = (state: TalksType = [], action: any) => {
   switch(action.type){
     case 'GET_TALKS':
       return action.talks

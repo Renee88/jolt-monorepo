@@ -1,15 +1,12 @@
-const rooms = require('@monorepo/backend/Data/Rooms.json')
+import type {RoomsType} from '../../types'
 
-const RoomsReducer = (state: [] = rooms, action: any) => {
+const RoomsReducer = (state: RoomsType= [], action: any) => {
   
   const rooms = [...state]
   
   switch (action.type){
     case 'GET_ROOMS':
-      return rooms
-    case 'ADD_USER_TO_ROOM':
-      rooms.forEach(room => room.id === action.roomId ? room.participants.push(action.user) : null )
-      return rooms
+      return action.rooms
     default:
       return state
   }

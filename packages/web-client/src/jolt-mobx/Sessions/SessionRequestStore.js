@@ -2,7 +2,7 @@ import { Observable } from "@jolt-us/jolt-mobx/lib/Observable";
 import { v4 as uuidv4 } from 'uuid'
 import type { SessionType, TalkType, UserType, RoomType } from '../../types'
 
-class SessionStore extends Observable {
+class SessionRequestStore extends Observable {
 
   session: SessionType = {}
 
@@ -26,6 +26,7 @@ class SessionStore extends Observable {
   setSession = (talkID: string, roomID: string, jolterID: string, date:string, hour: string) => {
     const id = uuidv4()
     this.session.id = id
+    this.session.status = 'PENDING'
     this.setTalk(talkID)
     this.setRoom(roomID)
     this.setJolter(jolterID)
@@ -35,4 +36,4 @@ class SessionStore extends Observable {
 
 }
 
-export default SessionStore
+export default SessionRequestStore

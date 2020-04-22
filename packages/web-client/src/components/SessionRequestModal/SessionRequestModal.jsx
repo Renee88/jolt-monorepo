@@ -8,13 +8,24 @@ import type { UserType, UsersType, TalksType, RoomsType, Props, OwnProps } from 
 import { connect } from '@jolt-us/jolt-mobx'
 import { connect as connectRedux } from 'react-redux'
 import './SessionRequestModal.css'
+import getUsers from '../../redux/actionCreators/GetUsersThunk'
+import getTalks from '../../redux/actionCreators/GetTalksThunk'
+import getRooms from '../../redux/actionCreators/GetRoomsThunk'
 
+const styles = {
+  buttonStyle: {
+    margin: 10,
+    backgroundColor: "#4b3fc9",
+    color: "white",
+  }
+}
 
 
 @connect((store: any) => ({
-  newSessionRequest: store.sessionsStore.session,
-  addSessionRequest: store.sessionsStore.addSessionRequest,
-  removeSessionRequest: store.sessionsStore.removeSessionRequest
+  newSessionRequest: store.sessionRequestsStore.session,
+  addSessionRequest: store.sessionRequestsStore.addSessionRequest,
+  removeSessionRequest: store.sessionRequestsStore.removeSessionRequest,
+  sessionRequests: store.sessionRequestsStore.sessionRequests,
 }))
 class SessionRequestModal extends Component<*, *>{
 
@@ -38,10 +49,11 @@ class SessionRequestModal extends Component<*, *>{
     this.setState({ added })
   }
 
-  addSessionRequest = (talkID: string, roomID: string, jolterID: string, date: string, hour: string) => {
-    if(talkID && roomID && jolterID && date && hour){
-      this.props.addSessionRequest(talkID, roomID, jolterID, date, hour)
+  addSessionRequest = async (talkID: string, roomID: string, jolterID: string, date: string, hour: string) => {
+    if (talkID && roomID && jolterID && date && hour) {
+      await this.props.addSessionRequest(talkID, roomID, jolterID, date, hour)
       this.setSessionAdded(true)
+      this.handleClose()
     }
   }
 
@@ -66,9 +78,17 @@ class SessionRequestModal extends Component<*, *>{
 
 
 
-  handleClose = () => {
+  handleClose =  () => {
     this.props.setOpen()
+    this.props.getSessionRequests()
     this.setSessionAdded(false)
+  }
+
+  componentDidMount = () => {
+    const { dispatch } = this.props
+    dispatch(getUsers())
+    dispatch(getTalks())
+    dispatch(getRooms())
   }
 
   render() {
@@ -88,13 +108,12 @@ class SessionRequestModal extends Component<*, *>{
       >
         <div className='paper'>
           <div id='session-request-inputs' >
-            <SessionRequestInput inputType='jolter' data={this.props.users} setField={this.handleInput} />
+            <SessionRequestInput className="modal-input" inputType='jolter' data={this.props.jolters} setField={this.handleInput} />
             <SessionRequestInput inputType='talk' data={this.props.talks} setField={this.handleInput} />
-            <SessionRequestInput inputType='room' data={this.props.rooms} setField={this.handleInput} />
+            <SessionRequestInput className="modal-input" inputType='room' data={this.props.rooms} setField={this.handleInput} />
           </div>
           <DatePicker getDateInput={this.getDateInput} getHourInput={this.getHourInput} />
-          <Button onClick={() => this.addSessionRequest(talkID, roomID, jolterID, date, hour)}><SendIcon />Submit</Button>
-          {this.state.added ? <p className='success-message'>Session request was added successfully</p> : null}
+          <Button style={styles.buttonStyle} variant='contained' onClick={() => this.addSessionRequest(talkID, roomID, jolterID, date, hour)} startIcon={<SendIcon />}>Submit</Button>
         </div>
       </Modal>
     )
@@ -103,9 +122,9 @@ class SessionRequestModal extends Component<*, *>{
 }
 
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state)=> {
   return {
-    users: state.users,
+    jolters: state.users,
     rooms: state.rooms,
     talks: state.talks
   }
@@ -114,4 +133,4 @@ const mapStateToProps = (state) => {
 
 export default connectRedux(mapStateToProps)(SessionRequestModal)
 
-// <Props, OwnProps,*,*,*,*>
+// 

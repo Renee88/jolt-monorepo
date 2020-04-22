@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import type { UserType } from '../../types'
-import { Button, Card } from '@material-ui/core'
-import { GetUserId as getUserId } from '../../redux/actions/GetUserId'
-import { RemoveUser as removeUser } from '../../redux/actions/RemoveUser'
+import { Button, Card, CardContent } from '@material-ui/core'
+import removeUser from '../../redux/actionCreators/RemoveUserThunk'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Grid } from 'react-spinners-css'
@@ -27,10 +26,6 @@ const useStyles = makeStyles(theme => ({
     userActions: {
       display: 'flex',
       justifyContent: 'space-between'
-    },
-    selectRoom: {
-      display: 'flex',
-      alignSelf: 'center'
     }
   })
 )
@@ -45,6 +40,7 @@ const UserDetails = ({id}: {id: string}) => {
   const classes = useStyles()
 
   const [user, setUser] = useState({})
+
 
   const users = useSelector(state => state.users)
 
@@ -63,18 +59,12 @@ const UserDetails = ({id}: {id: string}) => {
             <span>{id ? user.name : null}</span>
             <Button
               color="secondary"
-              onClick={() => dispatch(removeUser(users, id))
+              onClick={() => dispatch(removeUser(id))
               }>Delete user</Button>
           </div>
-          
-          <Link to={`/rooms`} className={classes.selectRoom}>
-            <Button style={buttonStyle}
-                    color='primary'
-                    variant="contained"
-                    onClick={() => {
-                      dispatch(getUserId(id))
-                    }}>Select Room</Button>
-          </Link>
+          <CardContent>
+            
+          </CardContent>
           
         </Card>
       : null

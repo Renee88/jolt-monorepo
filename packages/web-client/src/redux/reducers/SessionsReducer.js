@@ -1,24 +1,16 @@
-import type { SessionsType } from '../../types'
+import type {SessionsType} from '../../types'
 
-const SessionsReducer = (state: SessionsType = [], action: any) => {
+const SessionsReducer = (state: SessionsType = [], action: Object) => {
+  const userID = action.userID
   
-  const sessions = [...state]
-  
-  switch(action.type){
-    case 'ADD_SESSION_REQUEST':
-      sessions.push(action.session)
+  switch (action.type) {
+    case 'GET_SESSIONS_OF_JOLTER':
+      const sessions = action.sessions.filter(session => session.jolterID === userID)
       return sessions
-    case 'REMOVE_SESSION_REQUEST':
-      const sessionIndex = sessions.findIndex(session => session.id === action.sessionId)
-      
-      if(sessionIndex !== -1){
-        sessions.splice(sessionIndex, 1)
-      }
-      
-      return sessions
+    case 'GET_ALL_SESSIONS':
+      return action.sessions
     default:
       return state
-  
   }
 }
 

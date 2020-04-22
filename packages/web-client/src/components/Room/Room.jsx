@@ -4,7 +4,6 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 import type { RoomType, UserType } from '../../types'
 import { Link } from 'react-router-dom'
 import { AddUserToRoom as addUserToRoom } from '../../redux/actions/AddUserToRoom'
-import { ResetUserId as resetUserId } from '../../redux/actions/ResetUserId'
 import { makeStyles } from '@material-ui/core/styles'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -34,7 +33,6 @@ const Room = ({room}: { room: RoomType }) => {
   const classes = useStyles()
   
   const {users, userId} = useSelector(state => state)
-  const dispatch = useDispatch()
   
   const user = users.find(user => user.id === userId)
   const roomId = room.id
@@ -46,7 +44,6 @@ const Room = ({room}: { room: RoomType }) => {
           <FiberManualRecordIcon style={{color: room.name, marginRight: 10}}/>
           <div className={classes.roomCardText}>
             <p className={classes.row}>{room.name}</p>
-            <p className={classes.row}>In the room: {room.participants.length}</p>
           </div>
         </CardContent>
       </Card>

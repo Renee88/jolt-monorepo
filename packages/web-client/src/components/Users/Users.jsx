@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Component } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import ScrollToBottom from 'react-scroll-to-bottom'
-import User from '../User/User.jsx'
 import { makeStyles } from '@material-ui/core/styles'
 import type { UsersType } from '../../types'
 import { Grid } from 'react-spinners-css'
-
-import { useQuery } from '@apollo/react-hooks'
-import gql from 'graphql-tag'
+import User from '../User/User.jsx'
+import getUsersFromDB from '../../redux/actionCreators/GetUsersThunk'
 
 const useStyles = makeStyles(theme => ({
   scrollList: {
@@ -15,17 +14,22 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const Users = ({users}: {users: UsersType}) => {
-
-  const classes = useStyles()
-
-
-  return (
-    <ScrollToBottom className={classes.scrollList}>
-      {users.map((user, i) => <User key={i} user={user} />)}
-    </ScrollToBottom>
-  )
+const Users = () => {
+  const dispatch = useDispatch()
+  const {users} = useSelector(state => state)
+  
+  useEffect(() => {
+    dispatch(getUsersFromDB())
+  },[])
+    
+    return (
+      <ScrollToBottom className="scroll-list">
+        {users.map((user, i) => <User key={i} user={user} />)}
+      </ScrollToBottom>
+    )
+  
 }
+
 
 export default Users
 

@@ -1,20 +1,20 @@
 import React, { Component } from 'react'
 import { Provider as MobxProvider } from '@jolt-us/jolt-mobx'
-import SessionsStore from './SessionsStore'
-import SessionStore from './SessionStore'
+import SessionRequestsStore from './SessionRequestsStore'
+import SessionRequestStore from './SessionRequestStore'
 
-const sessionsStore = new SessionsStore()
-const sessionStore = new SessionStore
+const sessionRequestsStore = new SessionRequestsStore
+const sessionRequestStore = new SessionRequestStore
 
 const store = {
-  sessionsStore,
-  sessionStore
+  sessionRequestsStore,
+  sessionRequestStore
 }
 
 class SessionRequestsContext extends Component <*,*> {
 
-  store: sessionsStore
-
+  store: { sessionRequestsStore: SessionRequestsStore, sessionRequestStore: SessionRequestStore}
+  
   constructor(){
     super()
     this.store = store

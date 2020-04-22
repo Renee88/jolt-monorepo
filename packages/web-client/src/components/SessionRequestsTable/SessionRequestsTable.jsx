@@ -5,12 +5,13 @@ import type { SessionsType } from '../../types'
 import { makeStyles } from '@material-ui/core/styles'
 import { connect } from '@jolt-us/jolt-mobx/lib/connect'
 
+
 class SessionRequestTable extends Component<*, *> {
 
 
   render() {
-    const {sessions, getSessionRequests} = this.props
-
+    const {sessionRequests, getSessionRequests} = this.props
+    
     return (
       <TableContainer id='session-requests-table' aria-label="simple table">
         <Table>
@@ -27,22 +28,22 @@ class SessionRequestTable extends Component<*, *> {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sessions.length ? sessions.map((session, i) => {
-              const { id, jolterID, talkID, roomID, date , hour} = session.session
-              console.log(id)
+            {sessionRequests.length ? sessionRequests.map((sessionRequest, i) => {
+              const { id, jolterID, talkID, roomID, date , hour, status} = sessionRequest
               return(<SessionRequest key={i}
-                reqNumber={i}
+                reqNumber={i + 1}
                 id={id}
                 jolterID={jolterID}
                 talkID={talkID}
                 roomID={roomID}
                 date={date}
                 hour={hour}
-                getSessionRequests={getSessionRequests} />
+                status={status}
+                getSessionRequests={getSessionRequests}/>
             )}) : null}
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer> 
     )
   }
 }
