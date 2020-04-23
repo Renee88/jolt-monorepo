@@ -116,7 +116,7 @@ class SessionRequestModal extends Component<*, *>{
 }
 
 
-const mapStateToProps = (state)=> {
+const mapStateToProps = (state) => {
   return {
     jolters: state.jolters,
     rooms: state.rooms,
@@ -124,7 +124,6 @@ const mapStateToProps = (state)=> {
   }
 }
 
-
+//$FlowFixMe
 export default connectRedux(mapStateToProps)(SessionRequestModal)
 
-// 

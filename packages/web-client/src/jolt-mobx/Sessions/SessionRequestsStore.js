@@ -10,7 +10,7 @@ class SessionRequestsStore extends Observable {
     return data.data
   }
 
-  addSessionRequest = async (talkID: string, roomID: string, jolterID: string, date: string, hour: string): Promise<SessionsType> => {
+  addSessionRequest = async (talkID: string, roomID: string, jolterID: string, date: string, hour: string): Promise<void> => {
     const session = new SessionRequest
     session.setSession(talkID, roomID, jolterID, date, hour)
     const newSession = session.session
@@ -26,5 +26,6 @@ class SessionRequestsStore extends Observable {
   }
 
 }
+
 
 export default SessionRequestsStore

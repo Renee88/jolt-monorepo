@@ -24,8 +24,11 @@ const useStyles = makeStyles(theme => ({
     height: 30,
     width: 100,
     justifyContent: 'center',
+    alignItems: 'center',
     fontFamily: 'poppins',
     borderRadius: 5,
+    color: 'white',
+    backgroundColor: "#4b3fc9",
     boxShadow: '#222222 1px 1px 1px'
   },
   title: {
@@ -39,8 +42,8 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     padding: 10,
     margin: 5,
-    height: '40vh',
-    width: '40vw',
+    height: 300,
+    width: 250,
     boxShadow: 'grey 0px 1px 3px 1px'
   }
 }))

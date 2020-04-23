@@ -2,7 +2,7 @@ import React from 'react'
 import { Menu, MenuItem } from '@material-ui/core'
 
 const SessionRequestStatusMenu = ({ anchorEl, setAnchorEl, setStatus, sessionRequestID }:
-  { anchorEl: any, setAnchorEl: ({ } | null) => void, setStatus: (id: string, status: string) => void , sessionRequestID: string}) => {
+  { anchorEl: any, setAnchorEl: ({ } | null) => void, setStatus: (id: string, status: string) => Promise<void>, sessionRequestID: string}) => {
 
   const requestStatuses = ['PENDING', 'APPROVED', 'DECLINED']
 

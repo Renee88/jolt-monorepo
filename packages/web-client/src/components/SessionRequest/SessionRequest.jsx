@@ -102,4 +102,5 @@ const mapStateToProps = (state) => {
   }
 }
 
+//$FlowFixMe
 export default connectRedux(mapStateToProps)(SessionRequest)
