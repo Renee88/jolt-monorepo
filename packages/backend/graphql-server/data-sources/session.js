@@ -22,17 +22,16 @@ class SessionAPI extends DataSource {
         return session
     }
 
-    async addSession(talkID, jolterID, roomID) {
-        const sessionID = uuidv4()
+    async addSession(sessionRequestID, status) {
+        const id = uuidv4()
 
         const session = {
-            sessionID,
-            talkID,
-            jolterID,
-            roomID
+            id,
+            sessionRequestID,
+            status
         }
 
-        if (talkID && jolterID && roomID && sessionID) {
+        if (sessionID && status) {
             await this.store.sessions.push(session)
             return {
                 success: true,

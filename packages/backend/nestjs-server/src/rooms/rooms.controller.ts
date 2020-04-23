@@ -1,6 +1,6 @@
-import {Body, Controller, Delete, Get, Param, Post} from "@nestjs/common";
-import {RoomsService} from "./rooms.service";
-import {APIResponse, Data} from "../types/responsesTypes";
+import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
+import { RoomsService } from "./rooms.service";
+import { APIResponse, Data } from "../types/responsesTypes";
 
 @Controller('rooms')
 export class RoomsController {
@@ -8,32 +8,32 @@ export class RoomsController {
     }
 
     @Get()
-    getRooms(): APIResponse<Data[]> {
+    async getRooms(): Promise<APIResponse<Data[]>> {
         return {
-            data: this.RoomsService.getRooms(),
+            data: await this.RoomsService.getRooms(),
             success: true
         }
     }
 
     @Get(':id')
-    getRoom(
+    async getRoom(
         @Param('id') roomId: string
-    ): APIResponse<Data> {
+    ): Promise<APIResponse<Data>> {
         return {
-            data: this.RoomsService.getRoom(roomId),
+            data: await this.RoomsService.getRoom(roomId),
             success: true
         }
     }
 
     @Post()
-    addRoom(
+    async addRoom(
         @Body('name') roomName: string,
         @Body('talk') talk: string,
         @Body('jolter') jolter: string
-    ): APIResponse<Data> {
-        const id = this.RoomsService.addRoom(roomName, talk, jolter);
+    ): Promise<APIResponse<Data>> {
+        const { id } = await this.RoomsService.addRoom(roomName, talk, jolter);
         return {
-            data: {id},
+            data: { id },
             success: true
         }
     }

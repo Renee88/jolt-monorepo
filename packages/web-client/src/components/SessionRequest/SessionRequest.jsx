@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
 import type { RoomType, TalkType, UserType, Props, OwnProps } from '../../types'
-import StatusMenu from '../StatusMenu/StatusMenu.jsx'
+import SessionRequestStatusMenu from '../SessionRequestStatusMenu/SessionRequestStatusMenu.jsx'
 import { makeStyles } from '@material-ui/core/styles'
 import {connect as connectRedux} from 'react-redux'
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -38,7 +38,7 @@ class SessionRequest extends Component<*, *> {
     }
   }
 
-  setRequestStatus = async (id: string, status: string) => {
+  setSessionRequestStatus = async (id: string, status: string) => {
     await this.props.updateRequestStatus(id, status)
     this.props.getSessionRequests()
   }
@@ -85,7 +85,7 @@ class SessionRequest extends Component<*, *> {
             onClick={this.handleClick}><Button style={buttonStyle[status]}>{status}</Button></TableCell> :
             status === 'DECLINED' ? <TableCell className='declined' align="left"
               onClick={this.handleClick}><Button style={buttonStyle[status]}>{status}</Button></TableCell> : null}
-        <StatusMenu anchorEl={anchorEl} setAnchorEl={this.setAnchorEl} setStatus={this.setRequestStatus} sessionRequestID={id} />
+        <SessionRequestStatusMenu anchorEl={anchorEl} setAnchorEl={this.setAnchorEl} setStatus={this.setSessionRequestStatus} sessionRequestID={id} />
         <TableCell className="delete-icon" align="left" onClick={() => this.removeSessionRequest(id)}><DeleteIcon /></TableCell>
       </TableRow> : null
     )
@@ -96,7 +96,7 @@ class SessionRequest extends Component<*, *> {
 
 const mapStateToProps = (state) => {
   return {
-    jolters: state.users,
+    jolters: state.jolters,
     talks: state.talks,
     rooms: state.rooms
   }

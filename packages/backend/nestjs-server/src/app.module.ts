@@ -6,9 +6,11 @@ import {TalksModule} from "./talks/talks.module";
 import {RoomsModule} from "./rooms/rooms.module";
 import { SessionRequestsModule } from './sessionRequests/sessionRequests.module';
 import { SessionsModule } from './sessions/sessions.module';
+// import { SessionsModule } from './sessions/sessions.module';
+// import { SessionsResolver } from './sessions/sessions.resolver';
 
 @Module({
-    imports: [UsersModule, TalksModule, RoomsModule, SessionRequestsModule, SessionsModule],
+    imports: [UsersModule, TalksModule, RoomsModule, SessionRequestsModule],
     controllers: [AppController],
     providers: [AppService],
 })

@@ -42,11 +42,11 @@ const UserDetails = ({id}: {id: string}) => {
   const [user, setUser] = useState({})
 
 
-  const users = useSelector(state => state.users)
+  const jolters = useSelector(state => state.jolters)
 
   useEffect(() => {
-    const chosenUser = users.find((user,i) => user.id === id)
-    setUser(chosenUser)
+    const chosenJolter = jolters.find((user,i) => user.id === id)
+    setUser(chosenJolter)
   })
   
   const dispatch = useDispatch()

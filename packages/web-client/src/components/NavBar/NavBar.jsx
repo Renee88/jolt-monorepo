@@ -10,7 +10,6 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    // backgroundColor: '#4B3FC9',
     background: 'linear-gradient(45deg,#838DFF,#F88AC1)',
     height: '10vh'
   }

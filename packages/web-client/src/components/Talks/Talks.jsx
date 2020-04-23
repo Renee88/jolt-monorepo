@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Talk from '../Talk/Talk.jsx'
+import { useSelector, useDispatch } from 'react-redux'
 import ScrollToBottom from 'react-scroll-to-bottom'
 import { makeStyles } from '@material-ui/core/styles'
 import type { TalksType } from '../../types'
 import { Grid } from 'react-spinners-css'
+import getTalks from '../../redux/actionCreators/GetTalksThunk'
 
-import { useQuery } from '@apollo/react-hooks'
-import gql from 'graphql-tag'
 
 const useStyles = makeStyles(theme => ({
   scrollList: {
@@ -14,8 +14,16 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Talks = ({talks}: {talks: TalksType}) => {
+const Talks = () => {
   const classes = useStyles()
+
+  const talks = useSelector(state => state.talks)
+  const dispatch = useDispatch()
+
+  useEffect(()=>{
+    dispatch(getTalks())
+  },[])
+
 
 
   return (

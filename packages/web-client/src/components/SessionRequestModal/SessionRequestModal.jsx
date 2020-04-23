@@ -84,12 +84,6 @@ class SessionRequestModal extends Component<*, *>{
     this.setSessionAdded(false)
   }
 
-  componentDidMount = () => {
-    const { dispatch } = this.props
-    dispatch(getUsers())
-    dispatch(getTalks())
-    dispatch(getRooms())
-  }
 
   render() {
     const { open } = this.props
@@ -124,7 +118,7 @@ class SessionRequestModal extends Component<*, *>{
 
 const mapStateToProps = (state)=> {
   return {
-    jolters: state.users,
+    jolters: state.jolters,
     rooms: state.rooms,
     talks: state.talks
   }

@@ -1,8 +1,10 @@
 import React from 'react'
 import { Card, CardContent, CardMedia, Typography, CardActionArea } from '@material-ui/core'
+import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import type { UserProps } from '../../types'
+import { deepOrange } from '@material-ui/core/colors';
 
 const useStyles = makeStyles(theme => ({
   userCard: {
@@ -25,23 +27,30 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignSelf: 'center',
     marginLeft: 20
+  },
+  avatar: {
+    color: theme.palette.getContrastText(deepOrange[500]),
+    backgroundColor: deepOrange[500],
   }
 }))
 
-const User = ({user}: UserProps) => {
+const User = ({ user }: UserProps) => {
   const classes = useStyles()
-  
+
+  const firstNameCapital = user.name.split(" ")[0][0]
+  const lastNameCapital = user.name.split(" ")[1][0]
+
   return (
     <Link to={`/users/${user.id}`}>
       <Card className={classes.userCard}>
         <CardActionArea>
           <CardContent className={classes.user}>
-            <CardMedia
-              className={classes.userPic}
-              image={user.picture}
-              title={user.name}
-            />
-            
+
+            <Avatar className={user.picture ? classes.userPic : classes.avatar}
+              src={user.picture ? user.picture : null}>
+              {user.picture ? null : firstNameCapital + lastNameCapital}
+            </Avatar>
+
             <Typography className={classes.userName}>
               {user.name}
             </Typography>

@@ -31,10 +31,6 @@ const useStyles = makeStyles(theme => ({
 
 const Room = ({room}: { room: RoomType }) => {
   const classes = useStyles()
-  
-  const {users, userId} = useSelector(state => state)
-  
-  const user = users.find(user => user.id === userId)
   const roomId = room.id
   
   return (

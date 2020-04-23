@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Page = ({match, data}: {match: Object, data: any[]}) => {
+const Page = ({match}: {match: Object}) => {
   const classes = useStyles()
 
 const userId = useSelector(state=> state.userId)
@@ -30,17 +30,17 @@ const userId = useSelector(state=> state.userId)
   return (
     page === 'users' ?
       <div className={classes.page}>
-        <Users users={data}/>
+        <Users />
         <UserDetails id={match.params.id}/>
       </div> :
       page === 'talks' ?
         <div className={classes.page}>
-          <Talks talks = {data}/>
+          <Talks />
           <TalkDetails id={match.params.id} />
         </div> :
         page === 'rooms' ?
           <div className={classes.page}>
-            <Rooms  userId={userId} rooms={data}/>
+            <Rooms  userId={userId} />
             <RoomDetails id={match.params.id} />
           </div>
           : null

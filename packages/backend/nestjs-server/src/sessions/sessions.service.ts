@@ -17,11 +17,13 @@ export class SessionsService {
         return session
     }
 
-    async addSession(status, sessionRequestID): Promise<{ id: string }> {
-        const id = uuidv4()
-        const session = new SessionModel(id, sessionRequestID, status)
+    async addSession(id): Promise<{ id: string }> {
+        const ApprovedSessionRequest = await knex.select('*').from('session_requests').where('id', id)
+        const sessionID = uuidv4()
+        const {jolterID, talkID, roomID, date, hour, status} = ApprovedSessionRequest[0]
+        const session = new SessionModel(sessionID, jolterID, talkID, roomID, date, hour, status)
 
-        if (!session.sessionRequestID || !session.status) {
+        if (!jolterID || !talkID || !roomID || !date || !hour || !status) {
             throw new HttpException({
                 data: session,
                 success: false,
@@ -32,16 +34,18 @@ export class SessionsService {
         }
 
         const newSession = await knex('sessions').insert(session)
-        console.log(newSession)
         return { id }
     }
 
-    async updateSessionStatus(status, id) {
+    async updateSessionStatus(id, status) {
+        console.log(id, status)
         await knex('sessions').where('id', id).update({status})
+        const session = this.getSession(id)
+        return session
     }
 
     async findSession(id): Promise<Session> {
-       const session = await knex.select('*').where('id', id)
+       const session = await knex('sessions').where('id', id)
 
         if (!session[0]) {
             throw new HttpException({

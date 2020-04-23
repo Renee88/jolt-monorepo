@@ -6,7 +6,7 @@ import  UserReducer from './UserReducer'
 import SessionsReducer  from './SessionsReducer'
 
 const allReducers: any = combineReducers({
-  users: UsersReducer,
+  jolters: UsersReducer,
   rooms: RoomsReducer,
   talks: TalksReducer,
   sessions: SessionsReducer,

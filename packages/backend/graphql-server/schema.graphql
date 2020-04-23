@@ -7,7 +7,7 @@ const typeDefs = gql`
     name: String!
     picture: String
     email: String!
-    age: Float!
+    age: Int!
     createdAt: String!
   }
 
@@ -30,10 +30,8 @@ const typeDefs = gql`
 		talkID: ID!
 		roomID: ID!
 		jolterID: ID!
+    status: String!
 		createdAt: String!
-    talk: Talk!
-    room: Room!
-    jolter: User!
   }
 
   type Query {

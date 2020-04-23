@@ -1,8 +1,9 @@
 import React from 'react'
 import { Menu, MenuItem } from '@material-ui/core'
 
-const StatusMenu = ({ anchorEl, setAnchorEl, setStatus, sessionRequestID}: 
+const SessionRequestStatusMenu = ({ anchorEl, setAnchorEl, setStatus, sessionRequestID }:
   { anchorEl: any, setAnchorEl: ({ } | null) => void, setStatus: (id: string, status: string) => void , sessionRequestID: string}) => {
+
   const requestStatuses = ['PENDING', 'APPROVED', 'DECLINED']
 
   const handleClose = async (event, index) => {
@@ -30,4 +31,4 @@ const StatusMenu = ({ anchorEl, setAnchorEl, setStatus, sessionRequestID}:
   )
 }
 
-export default StatusMenu
+export default SessionRequestStatusMenu
