@@ -17,31 +17,38 @@ export class SessionsService {
         return session
     }
 
-    async addSession(status, sessionRequestID): Promise<{ id: string }> {
-        const id = uuidv4()
-        const session = new SessionModel(id, sessionRequestID, status)
-
-        if (!session.sessionRequestID || !session.status) {
-            throw new HttpException({
-                data: session,
-                success: false,
-                errorCode: HttpStatus.BAD_REQUEST,
-                error: 'Make sure you fill in all the necessary details'
-            }, HttpStatus.BAD_REQUEST)
-
+    async addSession(id): Promise<{ id: string }> {
+        try{
+            await this.findSession(id)
+        } catch(error) {
+            const ApprovedSessionRequest = await knex.select('*').from('session_requests').where('id', id)
+            const {jolterID, talkID, roomID, date, hour, status} = ApprovedSessionRequest[0]
+            const newSession = new SessionModel(id, jolterID, talkID, roomID, date, hour, status)
+    
+            if (!jolterID || !talkID || !roomID || !date || !hour || !status) {
+                throw new HttpException({
+                    data: newSession,
+                    success: false,
+                    errorCode: HttpStatus.BAD_REQUEST,
+                    error: 'Make sure you fill in all necessary details'
+                }, HttpStatus.BAD_REQUEST)
+    
+            }
+    
+            await knex('sessions').insert(newSession)
+            return { id }
         }
 
-        const newSession = await knex('sessions').insert(session)
-        console.log(newSession)
-        return { id }
     }
 
-    async updateSessionStatus(status, id) {
+    async updateSessionStatus(id, status) {
         await knex('sessions').where('id', id).update({status})
+        const session = this.getSession(id)
+        return session
     }
 
     async findSession(id): Promise<Session> {
-       const session = await knex.select('*').where('id', id)
+       const session = await knex('sessions').where('id', id)
 
         if (!session[0]) {
             throw new HttpException({

@@ -35,11 +35,11 @@ export class SessionRequestsController {
         @Body('hour') hour: string,
         @Body('date') date: string, 
         @Body('status') status: string
-    ): Promise<APIResponse<Data>> {
+    ): Promise<APIResponse<Data[]>> {
         const session = { talkID, jolterID, roomID, hour, date, status }
-        const {id} = await this.SessionRequestsService.addSessionRequest(session)
+        const sessionRequests = await this.SessionRequestsService.addSessionRequest(session)
         return {
-            data: {id} ,
+            data: sessionRequests ,
             success: true
         }
 

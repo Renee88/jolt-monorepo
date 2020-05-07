@@ -1,13 +1,17 @@
 require('dotenv').config();
+
 module.exports = {
 
   development: {
     client: 'mysql',
+    version:'5.7',
     connection: {
       host : process.env.DB_HOST,
-      user : process.env.USER,
-      password : process.env.PW,
-      database : 'jolt_training'
+      port: 33061,
+      user : process.env.DB_USER,
+      password : process.env.DB_PW,
+      database : 'mydb',
+      insecureAuth: true
     },
     migrations: {
       directory: './data/migrations',
@@ -19,9 +23,11 @@ module.exports = {
     client: 'mysql',
     connection: {
       host : process.env.DB_HOST,
-      user : process.env.USER,
-      password : process.env.PW,
-      database : 'jolt_training'
+      port: 33061,
+      user : process.env.DB_USER,
+      password : process.env.DB_PW,
+      database : 'mydb',
+      insecureAuth: true
     },
     migrations: {
       directory: './data/migrations',
@@ -33,9 +39,11 @@ module.exports = {
     client: 'mysql',
     connection: {
       host : process.env.DB_HOST,
-      user : process.env.USER,
-      password : process.env.PW,
-      database : 'jolt_training'
+      port: 33061,
+      user : process.env.DB_USER,
+      password : process.env.DB_PW,
+      database : 'mydb',
+      insecureAuth: true
     },
     migrations: {
       directory: './data/migrations',

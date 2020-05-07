@@ -1,26 +1,27 @@
 import {HttpException, HttpStatus, Injectable, NotFoundException} from "@nestjs/common";
 import {Room} from "./room.model";
 import {v4 as uuidv4} from 'uuid';
+const knex = require('../../data/db')
 
 
 @Injectable()
 export class RoomsService {
-    rooms: Room[] = require('../../../Data/Rooms.json');
 
-    getRooms() {
-        return [...this.rooms]
+    async getRooms(): Promise<Room[]> {
+        const rooms = await knex.select('*').from('rooms')
+        return [...rooms]
     }
 
     getRoom(id: string) {
-        const [room] = this.findRoom(id);
+        const room = this.findRoom(id);
         return {...room}
     }
 
-    addRoom(name, talk, jolter):  string  {
-        const roomId = uuidv4();
-        const newRoom = new Room(roomId, name, talk, jolter);
+    async addRoom(name, talk, jolter):  Promise<{id: string}>  {
+        const id = uuidv4();
+        const newRoom = new Room(id, name);
 
-        if(!name || !jolter){
+        if(!name){
             throw new HttpException({
                 data: newRoom,
                 success: false,
@@ -29,20 +30,22 @@ export class RoomsService {
             }, HttpStatus.BAD_REQUEST)
         }
 
-        this.rooms.push(newRoom);
-        return roomId
+        await knex('rooms').insert(newRoom)
+        return {id}
     }
 
-    deleteRoom(id: string) {
-        const roomIndex = this.findRoom(id)[1];
-        this.rooms.splice(roomIndex, 1)
+    async deleteRoom(id: string) {
+        await knex('rooms').where('id', id).del()
+        return { id }
     }
 
-    findRoom(id: string): [Room, number] {
-        const roomIndex = this.rooms.findIndex(room => room.id === id);
-        const room = this.rooms[roomIndex];
+    async findRoom(id: string): Promise<Room> {
+        // const roomIndex = this.rooms.findIndex(room => room.id === id);
+        // const room = this.rooms[roomIndex];
 
-        if (roomIndex === -1) {
+        const room = await knex.select('*').from('rooms').where('id', id)
+
+        if (!room[0]) {
             throw new HttpException({
                 data: room,
                 success: false,
@@ -50,7 +53,8 @@ export class RoomsService {
                 error: 'Room not found'
             }, HttpStatus.NOT_FOUND)
         }
-        return [room, roomIndex]
+
+        return room[0]
     }
 
 

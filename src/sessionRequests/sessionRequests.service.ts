@@ -39,8 +39,13 @@ export class SessionRequestsService {
             sessionRequest.status = 'PENDING'
         }
 
+        if(newSessionRequest.status === 'APPROVED'){
+            await this.SessionsService.addSession(id)
+        }
+
         await knex('session_requests').insert(newSessionRequest)
-        return { id }
+        const sessionRequests = await this.getSessionRequests()
+        return sessionRequests
     }
 
     async deleteSessionRequest(id): Promise<{id: string}> {
@@ -49,10 +54,10 @@ export class SessionRequestsService {
     }
 
     async updateSessionRequestStatus(status, id) {
-        await knex('session_requests').where('id', id).update({ status })
+        await knex('session_requests').where('id', id).update( {status} )
 
         if (status === 'APPROVED') {
-            await this.SessionsService.addSession(status, id)
+            await this.SessionsService.addSession(id)
         }
         return { id }
     }

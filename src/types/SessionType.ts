@@ -1,7 +1,10 @@
 type ID = string
 
 export type Session = {
-    id: ID,
-    sessionRequestID: ID,
-    status: string
+    sessionID: ID,
+    talkID: ID,
+    roomID: ID,
+    jolterID: ID,
+    status: string,
+    createdAt: string
 }
