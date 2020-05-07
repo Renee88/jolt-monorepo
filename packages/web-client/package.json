@@ -14,6 +14,7 @@
   "dependencies": {
     "@apollo/react-components": "^3.1.5",
     "@apollo/react-hooks": "^3.1.4",
+    "@babel/plugin-transform-flow-strip-types": "^7.9.0",
     "@bit/joshk.react-spinners-css.facebook": "^1.1.7",
     "@date-io/date-fns": "1.x",
     "@jolt-us/jolt-mobx": "^2.0.3",
