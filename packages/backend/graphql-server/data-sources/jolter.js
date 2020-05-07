@@ -18,6 +18,7 @@ class JolterAPI extends DataSource {
 
     async getJolters(){
         const jolters = await this.store.jolters
+        console.log(jolters)
         return jolters
     }
 }

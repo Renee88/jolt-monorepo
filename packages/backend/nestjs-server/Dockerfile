@@ -22,4 +22,3 @@ CMD [ "yarn", "start" ]
 
 # Copy the rest of your app's source code from your host to your image filesystem.
 ADD . .
-

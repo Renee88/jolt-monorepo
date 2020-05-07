@@ -4,7 +4,6 @@ import SessionRequest from '../SessionRequest/SessionRequest.jsx'
 import type { SessionsType } from '../../types'
 import { makeStyles } from '@material-ui/core/styles'
 import { connect } from '@jolt-us/jolt-mobx/lib/connect'
-import './SessionRequestsTable.css'
 
 
 class SessionRequestTable extends Component<*, *> {
@@ -14,7 +13,7 @@ class SessionRequestTable extends Component<*, *> {
     const {sessionRequests, getSessionRequests} = this.props
     
     return (
-      <TableContainer id="session-requests-table" aria-label="simple table">
+      <TableContainer id='session-requests-table' aria-label="simple table">
         <Table>
           <TableHead>
             <TableRow>
