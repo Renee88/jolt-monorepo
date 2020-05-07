@@ -1,7 +1,21 @@
 {
   "name": "@monorepo/desktop-shell",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "main.js",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "react-start": "cd ../web-client && yarn start",
+    "server-start": "cd ../backend/nestjs-server && yarn start:dev",
+    "start-electron": "concurrently \"yarn server-start && cd ../desktop-shell\" \"wait-on http://localhost:3000 && yarn start\""
+  },
+  "dependencies": {
+    "concurrently": "^5.2.0",
+    "electron-is-dev": "^1.2.0"
+  },
+  "devDependencies": {
+    "electron": "^8.2.5",
+    "wait-on": "^5.0.0"
+  }
 }

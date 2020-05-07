@@ -38,7 +38,6 @@ export class SessionRequestsController {
     ): Promise<APIResponse<Data[]>> {
         const session = { talkID, jolterID, roomID, hour, date, status }
         const sessionRequests = await this.SessionRequestsService.addSessionRequest(session)
-        console.log(sessionRequests.length)
         return {
             data: sessionRequests ,
             success: true

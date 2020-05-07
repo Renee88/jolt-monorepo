@@ -18,27 +18,30 @@ export class SessionsService {
     }
 
     async addSession(id): Promise<{ id: string }> {
-        const ApprovedSessionRequest = await knex.select('*').from('session_requests').where('id', id)
-        const sessionID = uuidv4()
-        const {jolterID, talkID, roomID, date, hour, status} = ApprovedSessionRequest[0]
-        const session = new SessionModel(sessionID, jolterID, talkID, roomID, date, hour, status)
-
-        if (!jolterID || !talkID || !roomID || !date || !hour || !status) {
-            throw new HttpException({
-                data: session,
-                success: false,
-                errorCode: HttpStatus.BAD_REQUEST,
-                error: 'Make sure you fill in all the necessary details'
-            }, HttpStatus.BAD_REQUEST)
-
+        try{
+            await this.findSession(id)
+        } catch(error) {
+            const ApprovedSessionRequest = await knex.select('*').from('session_requests').where('id', id)
+            const {jolterID, talkID, roomID, date, hour, status} = ApprovedSessionRequest[0]
+            const newSession = new SessionModel(id, jolterID, talkID, roomID, date, hour, status)
+    
+            if (!jolterID || !talkID || !roomID || !date || !hour || !status) {
+                throw new HttpException({
+                    data: newSession,
+                    success: false,
+                    errorCode: HttpStatus.BAD_REQUEST,
+                    error: 'Make sure you fill in all necessary details'
+                }, HttpStatus.BAD_REQUEST)
+    
+            }
+    
+            await knex('sessions').insert(newSession)
+            return { id }
         }
 
-        const newSession = await knex('sessions').insert(session)
-        return { id }
     }
 
     async updateSessionStatus(id, status) {
-        console.log(id, status)
         await knex('sessions').where('id', id).update({status})
         const session = this.getSession(id)
         return session

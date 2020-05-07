@@ -12,8 +12,9 @@ const DatePicker = ({ getDateInput, getHourInput }: { getDateInput: (date: strin
   const [selectedHour, setHourInput] = useState(today)
 
   const getHour = (selectedHour) => {
-    const minutes = parseInt(selectedHour.getMinutes()) < 10 ? "0" + selectedHour.getMinutes() : selectedHour.getMinutes()
-    const hour = selectedHour.getHours() + ':' + minutes
+    const minutes = parseInt(selectedHour.getMinutes()) < 10 ? '0' + selectedHour.getMinutes() : selectedHour.getMinutes()
+    const hours = parseInt(selectedHour.getHours()) < 10 ? '0' + selectedHour.getHours() : selectedHour.getHours()
+    const hour = hours + ':' + minutes
     return hour
   }
 

@@ -1,0 +1,5 @@
+schema: http://localhost:5000
+generates:
+  ./types/types.d.ts:
+    plugins:
+      - typescript

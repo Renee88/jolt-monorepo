@@ -65,7 +65,7 @@ class SessionRequests extends Component<*, *> {
         >
           <AddIcon style={{ marginRight: 10 }} /> New Session Request
         </Button>
-        <p id="session-requests-title">Session requests</p>
+        <p className="title">Session requests</p>
         <SessionRequestTable sessionRequests={sessionRequests} getSessionRequests={this.getSessionRequests} />
         <SessionRequestModal open={this.state.open} setOpen={this.toggleModalOpen} getSessionRequests={this.getSessionRequests} />
       </div>
