@@ -40,7 +40,7 @@ const Landing = ({ user }: { user: UserType }) => {
                 <Typography className={classes.text} variant="h5" component="h2">Welcome!</Typography>
                 <CardContent className={classes.paragraph}>
                     <Typography className={classes.line} variant="body2" component='p'>Here is some useful information to help you navigate through the system.</Typography>
-                    <Typography className={classes.line} variant="body2" component='p'>To get started you can click the menu button on the right corner, it leads to a main manu.</Typography>
+                    <Typography className={classes.line} variant="body2" component='p'>To get started you can click the menu button on the right corner, it leads to a main menu.</Typography>
                     <Typography className={classes.line} variant="body2" component='p'>As you might have guessed this is how you navigate through different sections in the Jolt curation system.</Typography>
                     <Typography className={classes.line} variant="body2" component='p'>This menu also includes a link back to this page so you can access it whenever you need.</Typography>
                     <Typography className={classes.line} variant="body2" component='p'>The users, talks and rooms sections are mostly informative and hold basic information regarding jolters, jolts and availability of rooms.</Typography>
