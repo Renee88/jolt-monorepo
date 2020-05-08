@@ -1,49 +1,19 @@
 import React from 'react'
 import { useState } from 'react'
 import { makeStyles, Card, CardContent } from '@material-ui/core'
+import VisibilityIcon from '@material-ui/icons/Visibility'
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff'
+import './Login.css'
 
 const useStyles = makeStyles(theme => ({
-  loginForm: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '90vh'
-  },
-  input: {
-    display: 'flex',
-    margin: 'auto',
-    padding: 5,
-    fontSize: 18,
-    borderRadius: 5,
-    fontFamily: 'poppins'
-  },
-  submit: {
-    display: 'flex',
-    margin: 'auto',
-    height: 30,
-    width: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontFamily: 'poppins',
-    borderRadius: 5,
-    color: 'white',
-    backgroundColor: "#4b3fc9",
-    boxShadow: '#222222 1px 1px 1px'
-  },
-  title: {
-    fontSize: 30,
-    fontFamily: 'poppins',
-    textAlign: 'center'
-  },
   card: {
     display:'flex',
     justifyContent:'center',
     alignItems: 'center',
     padding: 10,
     margin: 5,
-    height: 300,
-    width: 250,
+    height: 400,
+    width: 350,
     boxShadow: 'grey 0px 1px 3px 1px'
   }
 }))
@@ -51,6 +21,7 @@ const useStyles = makeStyles(theme => ({
 const Landing = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [visible, setVisible] = useState(false)
 
   const classes = useStyles()
 
@@ -69,15 +40,22 @@ const Landing = () => {
   }
 
   return (
-    <div className={classes.loginForm}>
+    <div className='loginForm'>
       <Card className={classes.card}>
-        <CardContent className={classes.content}>
-          <p className={classes.title}> Please login</p>
-          <input type="text" className={classes.input} placeholder='E-mail' value={email} onChange={emailHandler} />
-          <br />
-          <input type='text' className={classes.input} placeholder='Password' value={password} onChange={passwordHandler} />
-          <br />
-          <div className={classes.submit} onClick={handleSubmit}>Login</div>
+        <CardContent className='content'>
+
+          <p className='title'> Please login</p>
+
+          <div className='inputs-container'>
+          <input type='text' id='email' className='input' placeholder='E-mail' value={email} onChange={emailHandler} />
+          {visible ? <input id='password' type='text' className='input' placeholder='Password' value={password} onChange={passwordHandler} />
+            :<input id='password'  type='password' className='input' placeholder='Password' value={password} onChange={passwordHandler} /> }
+          
+          { visible ? <VisibilityOffIcon id='icon' onClick={()=> setVisible(false)}/> 
+          :<VisibilityIcon id='icon' onClick={()=> setVisible(true)}/>}
+
+          </div>
+          <div id='submit' onClick={handleSubmit}>Login</div>
         </CardContent>
       </Card>
     </div>

@@ -6,8 +6,8 @@ const useStyles = makeStyles(theme => ({
   logo: {
     fontSize: 60,
     color: 'white',
-    fontFamily: 'poppins',
-    fontWeight: 'bold',
+    fontFamily: 'poppins, sans-serif',
+    fontWeight: '600',
     marginLeft: 20,
     cursor: 'pointer'
   },
