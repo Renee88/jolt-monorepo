@@ -15,7 +15,7 @@ ADD yarn.lock .
 RUN yarn install
 
 # Inform Docker that the container is listening on the specified port at runtime.
-EXPOSE 8000
+EXPOSE 5000 3000
 
 # Run the specified command within the container.
 CMD [ "yarn", "start" ]
