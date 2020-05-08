@@ -4,13 +4,12 @@ import SessionRequestInput from '../SessionRequestInput/SessionRequestInput.jsx'
 import SendIcon from '@material-ui/icons/Send'
 import { makeStyles } from '@material-ui/core/styles'
 import DatePicker from '../DatePicker/DatePicker.jsx'
+import Snackbar from '@material-ui/core/Snackbar'
+import MuiAlert from '@material-ui/lab/Alert'
 import type { UserType, UsersType, TalksType, RoomsType, Props, OwnProps } from '../../types'
 import { connect } from '@jolt-us/jolt-mobx'
 import { connect as connectRedux } from 'react-redux'
 import './SessionRequestModal.css'
-import getUsers from '../../redux/actionCreators/GetUsersThunk'
-import getTalks from '../../redux/actionCreators/GetTalksThunk'
-import getRooms from '../../redux/actionCreators/GetRoomsThunk'
 
 const styles = {
   buttonStyle: {
@@ -20,6 +19,9 @@ const styles = {
   }
 }
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 @connect((store: any) => ({
   newSessionRequest: store.sessionRequestsStore.session,
@@ -40,7 +42,8 @@ class SessionRequestModal extends Component<*, *>{
         jolter: {},
         date: '',
         hour: ''
-      }
+      },
+      showErrorSnackbar: false
     }
   }
 
@@ -52,9 +55,18 @@ class SessionRequestModal extends Component<*, *>{
   addSessionRequest = async (talkID: string, roomID: string, jolterID: string, date: string, hour: string) => {
     if (talkID && roomID && jolterID && date && hour) {
       await this.props.addSessionRequest(talkID, roomID, jolterID, date, hour)
+      this.props.toggleSuccessSnackbarOpen()
       this.setSessionAdded(true)
       this.handleClose()
+    } else {
+      this.toggleErrorSnackbarOpen()
     }
+  }
+
+  toggleErrorSnackbarOpen = () => {
+    const showErrorSnackbar = !this.state.showErrorSnackbar
+    console.log(showErrorSnackbar)
+    this.setState({ showErrorSnackbar })
   }
 
   handleInput = (fieldName: string, data: {}) => {
@@ -78,15 +90,20 @@ class SessionRequestModal extends Component<*, *>{
 
 
 
-  handleClose =  () => {
+  handleClose = () => {
     this.props.setOpen()
     this.props.getSessionRequests()
     this.setSessionAdded(false)
   }
 
+  handleSnackbarClose = () => {
+    this.toggleErrorSnackbarOpen()
+  }
+
 
   render() {
-    const { open } = this.props
+    const { open, talks, jolters } = this.props
+    const { added, showErrorSnackbar } = this.state
     const { talk, room, jolter, date, hour } = this.state.input
     const talkID = talk.id
     const roomID = room.id
@@ -102,12 +119,20 @@ class SessionRequestModal extends Component<*, *>{
       >
         <div className='paper'>
           <div id='session-request-inputs' >
-            <SessionRequestInput className="modal-input" inputType='jolter' data={this.props.jolters} setField={this.handleInput} />
-            <SessionRequestInput inputType='talk' data={this.props.talks} setField={this.handleInput} />
+            <SessionRequestInput className="modal-input" inputType='jolter' data={jolters} setField={this.handleInput} />
+            <SessionRequestInput className="modal-input" inputType='talk' data={talks} setField={this.handleInput} />
             <SessionRequestInput className="modal-input" inputType='room' data={this.props.rooms} setField={this.handleInput} />
           </div>
           <DatePicker getDateInput={this.getDateInput} getHourInput={this.getHourInput} />
           <Button style={styles.buttonStyle} variant='contained' onClick={() => this.addSessionRequest(talkID, roomID, jolterID, date, hour)} startIcon={<SendIcon />}>Submit</Button>
+
+          {!added ?
+            <Snackbar open={showErrorSnackbar} autoHideDuration={3000} onClose={this.handleSnackbarClose}>
+              <Alert onClose={() => this.handleSnackbarClose()} severity="error">
+                Session was added successfully
+              </Alert>
+            </Snackbar>
+            : null}
         </div>
       </Modal>
     )

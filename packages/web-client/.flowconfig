@@ -1,5 +1,5 @@
 [ignore]
-
+.*/node_modules/.*
 .*/webpack\.config\.js
 .*/\.babelrc
 .*/package\.json
@@ -11,6 +11,7 @@
 .*/flow-typed/.*
 .*/\.storybook/.*
 .*/Task\.jsx
+
 [include]
 
 [libs]

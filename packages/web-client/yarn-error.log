@@ -1,26 +1,30 @@
 Arguments: 
-  /Users/reneecohen/.nvm/versions/node/v8.17.0/bin/node /usr/local/Cellar/yarn/1.22.1/libexec/bin/yarn.js start
+  /Users/reneecohen/.nvm/versions/node/v12.16.1/bin/node /usr/local/Cellar/yarn/1.22.1/libexec/bin/yarn.js install
 
 PATH: 
-  /Users/reneecohen/.nvm/versions/node/v8.17.0/bin:/Users/reneecohen/.autojump/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/reneecohen/.nvm/versions/node/v8.17.0/bin:/Users/reneecohen/.autojump/bin
+  /Users/reneecohen/.nvm/versions/node/v12.16.1/bin:/Users/reneecohen/.nvm/versions/node/v8.17.0/bin:/Users/reneecohen/.autojump/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/reneecohen/.nvm/versions/node/v8.17.0/bin:/Users/reneecohen/.autojump/bin
 
 Yarn version: 
   1.22.1
 
 Node version: 
-  8.17.0
+  12.16.1
 
 Platform: 
   darwin x64
 
 Trace: 
-  SyntaxError: /Users/reneecohen/Documents/monorepo/packages/web-client/package.json: Unexpected token < in JSON at position 473
-      at JSON.parse (<anonymous>)
-      at /usr/local/Cellar/yarn/1.22.1/libexec/lib/cli.js:1625:59
-      at Generator.next (<anonymous>)
-      at step (/usr/local/Cellar/yarn/1.22.1/libexec/lib/cli.js:310:30)
-      at /usr/local/Cellar/yarn/1.22.1/libexec/lib/cli.js:321:13
-      at <anonymous>
+  Error: https://registry.yarnpkg.com/@monorepo%2fbackend: Not found
+      at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.22.1/libexec/lib/cli.js:66982:18)
+      at Request.self.callback (/usr/local/Cellar/yarn/1.22.1/libexec/lib/cli.js:140743:22)
+      at Request.emit (events.js:311:20)
+      at Request.<anonymous> (/usr/local/Cellar/yarn/1.22.1/libexec/lib/cli.js:141715:10)
+      at Request.emit (events.js:311:20)
+      at IncomingMessage.<anonymous> (/usr/local/Cellar/yarn/1.22.1/libexec/lib/cli.js:141637:12)
+      at Object.onceWrapper (events.js:417:28)
+      at IncomingMessage.emit (events.js:323:22)
+      at endReadableNT (_stream_readable.js:1204:12)
+      at processTicksAndRejections (internal/process/task_queues.js:84:21)
 
 npm manifest: 
   {
@@ -39,10 +43,6 @@ npm manifest:
     "dependencies": {
       "@apollo/react-components": "^3.1.5",
       "@apollo/react-hooks": "^3.1.4",
-  <<<<<<< HEAD
-      "@babel/plugin-transform-flow-strip-types": "^7.9.0",
-  =======
-  >>>>>>> parent of 29dd66f... mysql dockerized
       "@bit/joshk.react-spinners-css.facebook": "^1.1.7",
       "@date-io/date-fns": "1.x",
       "@jolt-us/jolt-mobx": "^2.0.3",

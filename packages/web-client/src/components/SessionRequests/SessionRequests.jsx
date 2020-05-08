@@ -3,6 +3,8 @@ import type { SessionsType } from "../../types";
 import { Button } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { makeStyles } from "@material-ui/core/styles";
+import Snackbar from '@material-ui/core/Snackbar'
+import MuiAlert from '@material-ui/lab/Alert'
 import SessionRequestModal from "../SessionRequestModal/SessionRequestModal.jsx";
 import SessionRequestTable from "../SessionRequestsTable/SessionRequestsTable.jsx";
 import { Component } from "react";
@@ -23,6 +25,10 @@ const styles = {
   },
 };
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 @connect((store: any) => ({
   getSessionRequests: store.sessionRequestsStore.getSessionRequests
 }))
@@ -33,14 +39,25 @@ class SessionRequests extends Component<*, *> {
     super();
     this.state = {
       open: false,
-      sessionRequests: []
+      sessionRequests: [],
+      showSuccessSnackbar: false
     };
   }
 
+  
   toggleModalOpen = () => {
     const state = { ...this.state };
     this.setState({ open: !this.state.open });
   };
+  
+  toggleSuccessSnackbarOpen = () => {
+    const showSuccessSnackbar = !this.state.showSuccessSnackbar
+    this.setState({ showSuccessSnackbar })
+  }
+
+  handleSnackbarClose = () => {
+    this.toggleSuccessSnackbarOpen()
+  }
 
 
   getSessionRequests = async () => {
@@ -54,7 +71,7 @@ class SessionRequests extends Component<*, *> {
   }
 
   render() {
-    const { sessionRequests } = this.state
+    const { sessionRequests, showSuccessSnackbar } = this.state
 
     return (
       <div>
@@ -67,7 +84,12 @@ class SessionRequests extends Component<*, *> {
         </Button>
         <p id="session-requests-title">Session requests</p>
         <SessionRequestTable sessionRequests={sessionRequests} getSessionRequests={this.getSessionRequests} />
-        <SessionRequestModal open={this.state.open} setOpen={this.toggleModalOpen} getSessionRequests={this.getSessionRequests} />
+        <SessionRequestModal open={this.state.open} setOpen={this.toggleModalOpen} toggleSuccessSnackbarOpen = {this.toggleSuccessSnackbarOpen} getSessionRequests={this.getSessionRequests} />
+        <Snackbar open={showSuccessSnackbar} autoHideDuration={3000} onClose={this.handleSnackbarClose}>
+              <Alert onClose={() => this.handleSnackbarClose('success')} severity="success">
+                Session was added successfully
+              </Alert>
+            </Snackbar>
       </div>
     );
   }
