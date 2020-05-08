@@ -20,7 +20,7 @@ class SessionRequestTable extends Component<*, *> {
               <TableCell align="left">Request No.</TableCell>
               <TableCell align="left">Talk</TableCell>
               <TableCell align="left">Room</TableCell>
-              <TableCell align="left">Jolter</TableCell>
+              <TableCell align="left">Volter</TableCell>
               <TableCell align="left">Date</TableCell>
               <TableCell align="left">Hour</TableCell>
               <TableCell align="left">Status</TableCell>

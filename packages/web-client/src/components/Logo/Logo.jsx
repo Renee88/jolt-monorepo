@@ -24,7 +24,7 @@ const Logo = () => {
   
   return (
     <Link to={`/`}>
-      <span className={classes.logo}>Jolt</span><span className={classes.appName}> Curation</span>
+      <span className={classes.logo}>Volt</span><span className={classes.appName}> Curation</span>
     </Link>
   )
 }

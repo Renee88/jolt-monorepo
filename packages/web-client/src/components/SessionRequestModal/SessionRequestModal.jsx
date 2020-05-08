@@ -129,7 +129,7 @@ class SessionRequestModal extends Component<*, *>{
           {!added ?
             <Snackbar open={showErrorSnackbar} autoHideDuration={3000} onClose={this.handleSnackbarClose}>
               <Alert onClose={() => this.handleSnackbarClose()} severity="error">
-                Session was added successfully
+                Please fill in all fields
               </Alert>
             </Snackbar>
             : null}

@@ -12,7 +12,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Grid } from 'react-spinners-css'
 import { useSelector } from 'react-redux'
 import Context from './jolt-mobx/Sessions/Context.jsx'
-import Sessions from './components/SessionsTable/SessionsTable.jsx'
+import Sessions from './components/Sessions/Sessions.jsx'
 import './App.css'
 
 
