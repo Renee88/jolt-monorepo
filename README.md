@@ -60,7 +60,7 @@ Follow the next steps to run the app on your machine.
 - Functional login page
 - Users Talks and Rooms pages filled with dummy details on each entity.
 
-<img src ="/images/Landing.png" height = 400>
+<img src ="/images/DrawerMenu.png" height = 400>
 
 
 - A press on the hamburger icon leads the user to a drawer menu with the following options: add expenses, watch monthly transactions, and see a detailed list from the first record until today.
