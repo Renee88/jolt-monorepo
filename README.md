@@ -26,9 +26,9 @@ Follow the next steps to run the app on your machine.
 - After you made sure mysql server is up and running, create a DB named mydb.
 ##### Data migration - knex.js
 - Inside the nestjs-server directory set a .env file with the following variables (according to your local db settings):
-.. DB_HOST 
-.. DB_USER 
-.. DB_PW
+  - DB_HOST 
+  - DB_USER 
+  - DB_PW
 - Change the port according to your db port in the knexfile.js
 - Go to the backend/nestjs-server dir and run ```yarn migrate``` to create tables.
 - When migration is complete run ```yarn seed``` to load the tables with data.
