@@ -71,6 +71,7 @@ class SessionRequestModal extends Component<*, *>{
 
   handleInput = (fieldName: string, data: {}) => {
     const input = { ...this.state.input }
+    fieldName === 'volter' ? fieldName = 'jolter': null
     input[fieldName] = data
     this.setState({ input })
 
@@ -102,7 +103,7 @@ class SessionRequestModal extends Component<*, *>{
 
 
   render() {
-    const { open, talks, jolters } = this.props
+    const { open, talks, jolters, rooms } = this.props
     const { added, showErrorSnackbar } = this.state
     const { talk, room, jolter, date, hour } = this.state.input
     const talkID = talk.id
@@ -119,9 +120,9 @@ class SessionRequestModal extends Component<*, *>{
       >
         <div className='paper'>
           <div id='session-request-inputs' >
-            <SessionRequestInput className="modal-input" inputType='jolter' data={jolters} setField={this.handleInput} />
+            <SessionRequestInput className="modal-input" inputType='volter' data={jolters} setField={this.handleInput} />
             <SessionRequestInput className="modal-input" inputType='talk' data={talks} setField={this.handleInput} />
-            <SessionRequestInput className="modal-input" inputType='room' data={this.props.rooms} setField={this.handleInput} />
+            <SessionRequestInput className="modal-input" inputType='room' data={rooms} setField={this.handleInput} />
           </div>
           <DatePicker getDateInput={this.getDateInput} getHourInput={this.getHourInput} />
           <Button style={styles.buttonStyle} variant='contained' onClick={() => this.addSessionRequest(talkID, roomID, jolterID, date, hour)} startIcon={<SendIcon />}>Submit</Button>
