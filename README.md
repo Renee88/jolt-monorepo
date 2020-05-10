@@ -43,7 +43,22 @@ Follow the next steps to run the app on your machine.
 
 ## Available features and display
 
-### Complete pages:
+### Help page
+<img src ="/images/HelpScreen.png" height = 400>
+
+### Drawer menu for navigation in the app
+<img src ="/images/DrawerMenu.png" height = 400>
+
+### Session requests
+
+<img src ="/images/SessionRequestModal.png" height = 400>
+
+<img src ="/images/SessionRequestScreen.png" height = 400>
+
+### Sessions
+<img src ="/images/SessionsScreen.png" height = 400>
+
+## Complete pages:
 - Session requests
 - Sessions
 
@@ -52,15 +67,17 @@ Follow the next steps to run the app on your machine.
 - Users
 - Talks
 - Rooms
+- Help
 
-..* These pages contain lists of Users, Talks and Rooms however when clicked no details are displayed.
-..* In the users page there is an option to remove a user from the list.
+  * These pages contain lists of Users, Talks and Rooms however when clicked no details are displayed.
+  * In the users page there is an option to remove a user from the list.
+  * Organization of help page
 
 ## Future features:
 - Functional login page
 - Users Talks and Rooms pages filled with dummy details on each entity.
 
-<img src ="/images/DrawerMenu.png" height = 400>
+
 
 
 - A press on the hamburger icon leads the user to a drawer menu with the following options: add expenses, watch monthly transactions, and see a detailed list from the first record until today.
