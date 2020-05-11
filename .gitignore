@@ -1,7 +1,7 @@
-<<<<<<< HEAD
 # compiled output
-/dist
-/node_modules
+dist
+public
+node_modules
 
 # Logs
 logs
@@ -36,7 +36,3 @@ lerna-debug.log*
 
 # ENV
 .env
-=======
-node_modules
-.idea
->>>>>>> f20a0a7023ba21cae73ca5485fd070ab1e019314
