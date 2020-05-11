@@ -1,6 +1,5 @@
 # compiled output
-dist
-public
+/dist
 node_modules
 
 # Logs
