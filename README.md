@@ -1,4 +1,4 @@
-#Volt schedule
+# Volt schedule
 
 A session secheduling program that enables session request registration and session scheduling. An approved session request is added to the session page. A session cannot be removed, only canceled.
 
